@@ -1,244 +1,300 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#171512">
-  <meta name="description" content="FÉNIX: belleza, accesorios y detalles para renacer a tu manera.">
+  <meta name="description" content="FÉNIX: joyería, accesorios, maquillaje y cuidado capilar. Renace a tu manera.">
   <title>FÉNIX | Renace a tu manera</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --black: #171512;
-      --ivory: #F2E8D9;
-      --champagne: #C4A16C;
-      --beige: #D8C0A3;
-      --muted: #B9AEA0;
+      --black-soft: #211b16;
+      --ivory: #f5eee4;
+      --ivory-deep: #eadcc9;
+      --champagne: #c4a16c;
+      --gold-light: #dfc18b;
+      --brown: #6b4532;
+      --text: #f5eee4;
+      --muted: #d5c8b7;
+      --serif: "Bodoni Moda", Georgia, serif;
+      --sans: "Montserrat", Arial, sans-serif;
     }
-
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      background: var(--black);
-      color: var(--ivory);
-      font-family: 'Montserrat', sans-serif;
-      line-height: 1.7;
-    }
+    body { margin: 0; background: var(--ivory); color: var(--black); font-family: var(--sans); }
     a { color: inherit; text-decoration: none; }
+    img { display: block; width: 100%; }
     .announcement {
-      text-align: center;
-      padding: 9px 16px;
-      background: var(--champagne);
-      color: var(--black);
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
+      min-height: 30px; padding: 8px 4%; display: flex; justify-content: space-between;
+      align-items: center; gap: 12px; background: var(--champagne); color: var(--black);
+      font-size: 9px; letter-spacing: 1.6px; text-transform: uppercase;
     }
+    .announcement span:last-child { letter-spacing: .7px; }
     header {
-      padding: 22px 7%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      border-bottom: 1px solid #ffffff18;
+      position: sticky; top: 0; z-index: 10; background: rgba(23,21,18,.97);
+      color: var(--text); border-bottom: 1px solid rgba(196,161,108,.28);
     }
-    .brand {
-      color: var(--champagne);
-      font: 600 35px 'Cormorant Garamond', serif;
-      letter-spacing: 7px;
+    .nav-wrap {
+      max-width: 1440px; margin: auto; padding: 15px 5%; min-height: 88px;
+      display: flex; justify-content: space-between; align-items: center; gap: 24px;
     }
-    .brand small {
-      display: block;
-      text-align: center;
-      color: var(--ivory);
-      font: 9px 'Montserrat', sans-serif;
-      letter-spacing: 3px;
-    }
-    nav { display: flex; gap: 25px; flex-wrap: wrap; }
-    nav a { font-size: 11px; letter-spacing: 1px; }
-    nav a:hover, .text-link:hover { color: var(--champagne); }
+    .brand { display: flex; align-items: center; gap: 12px; min-width: 200px; }
+    .phoenix-mark { width: 42px; height: 52px; color: var(--champagne); flex-shrink: 0; }
+    .brand-name { font: 500 34px/1 var(--serif); letter-spacing: 5px; color: var(--gold-light); }
+    .brand-tag { margin-top: 7px; font-size: 9px; letter-spacing: 3px; color: var(--muted); }
+    nav { display: flex; align-items: center; gap: clamp(14px, 2.5vw, 34px); }
+    nav a { font-size: 10px; letter-spacing: .7px; text-transform: uppercase; transition: color .2s; }
+    nav a:hover { color: var(--gold-light); }
+    .nav-actions { display: flex; gap: 15px; color: var(--gold-light); font-size: 18px; }
+    .menu-toggle { display: none; border: 1px solid rgba(196,161,108,.6); color: var(--gold-light); background: transparent; padding: 8px 11px; }
     .hero {
-      min-height: 570px;
-      padding: 85px 8%;
-      display: grid;
-      grid-template-columns: 1.1fr .9fr;
-      align-items: center;
-      gap: 50px;
-      background:
-        radial-gradient(ellipse at 78% 45%, #8a69302b, transparent 48%),
-        linear-gradient(120deg, #171512 55%, #242019);
+      min-height: 490px; display: grid; grid-template-columns: .9fr 1.1fr; align-items: center;
+      position: relative; overflow: hidden; color: var(--text);
+      background: linear-gradient(90deg, rgba(18,15,12,.98) 0%, rgba(23,19,15,.92) 37%, rgba(23,19,15,.16) 75%), 
+        url("https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=2000&q=85") center/cover;
     }
-    .eyebrow {
-      color: var(--champagne);
-      font-size: 10px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-    }
-    h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 500; }
-    h1 { font-size: clamp(48px, 6vw, 82px); line-height: 1.02; margin: 22px 0; }
+    .hero-copy { position: relative; z-index: 2; padding: 58px 0 58px max(7vw, calc((100vw - 1320px)/2)); }
+    .eyebrow { color: var(--champagne); font-size: 10px; letter-spacing: 4px; text-transform: uppercase; margin: 0 0 18px; }
+    h1 { font: 400 clamp(42px, 5.4vw, 76px)/1.06 var(--serif); letter-spacing: -1.8px; margin: 0 0 22px; }
     h1 em { color: var(--champagne); font-weight: 400; }
-    .hero p { max-width: 440px; color: var(--muted); font-size: 13px; }
-    .actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 30px; }
-    .button {
-      display: inline-block;
-      padding: 13px 22px;
-      background: var(--champagne);
-      color: var(--black);
-      border: 1px solid var(--champagne);
-      font-size: 10px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      text-align: center;
+    .hero-copy > p:not(.eyebrow) { max-width: 480px; color: #e2d7c8; font-size: 12px; line-height: 1.9; }
+    .buttons { display: flex; gap: 13px; flex-wrap: wrap; margin-top: 26px; }
+    .btn { min-height: 43px; padding: 14px 22px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-size: 10px; letter-spacing: .8px; text-transform: uppercase; border: 1px solid var(--champagne); transition: .2s; }
+    .btn-gold { background: var(--champagne); color: var(--black); }
+    .btn-gold:hover { background: var(--gold-light); }
+    .btn-outline { color: var(--text); background: rgba(23,21,18,.28); }
+    .btn-outline:hover { background: rgba(196,161,108,.16); }
+    .hero-art { min-height: 490px; }
+    .categories, .featured, .essence, .contact { padding: 58px 5%; }
+    .section-heading { text-align: center; margin: 0 auto 28px; }
+    .section-heading .eyebrow { margin-bottom: 8px; font-size: 9px; }
+    h2 { margin: 0; font: 400 clamp(30px, 3.3vw, 43px)/1.2 var(--serif); }
+    .section-sub { color: #6e6256; font-size: 12px; line-height: 1.8; margin: 10px auto 0; max-width: 600px; }
+    .categories { background: var(--ivory); }
+    .category-grid { max-width: 1360px; margin: auto; display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+    .category-card { position: relative; height: 205px; overflow: hidden; color: white; background: #30261d; }
+    .category-card img { height: 100%; object-fit: cover; transition: transform .6s; }
+    .category-card:hover img { transform: scale(1.06); }
+    .category-card::after { content: ""; position: absolute; inset: 35% 0 0; background: linear-gradient(transparent,rgba(0,0,0,.82)); }
+    .category-label { position: absolute; z-index: 1; bottom: 17px; left: 18px; right: 15px; }
+    .category-label strong { display: block; font: 400 22px/1.15 var(--serif); }
+    .category-label span { display: block; margin-top: 5px; font: 10px var(--sans); color: #f1e6d8; }
+    .circle-arrow { position: absolute; z-index: 2; right: 15px; bottom: 20px; border: 1px solid #fff; width: 31px; height: 31px; border-radius: 50%; display: grid; place-items: center; }
+    .featured { background: linear-gradient(180deg,#f0e5d6,#f7f0e7); }
+    .product-grid { max-width: 1360px; margin: auto; display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; }
+    .product-card { background: #fffaf3; border: 1px solid rgba(107,69,50,.12); }
+    .product-image { aspect-ratio: 1/1; overflow: hidden; background: #e4d2bd; }
+    .product-image img { height: 100%; object-fit: cover; transition: transform .5s; }
+    .product-card:hover .product-image img { transform: scale(1.04); }
+    .product-info { padding: 16px; }
+    .product-kicker { font-size: 8px; letter-spacing: 1.7px; color: #8c6a43; text-transform: uppercase; }
+    .product-info h3 { margin: 7px 0 5px; font: 400 21px var(--serif); }
+    .product-info p { margin: 0 0 13px; font-size: 10px; line-height: 1.7; color: #6e6256; }
+    .product-bottom { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .price { font-size: 11px; font-weight: 600; }
+    .small-link { font-size: 9px; text-transform: uppercase; letter-spacing: .6px; border-bottom: 1px solid var(--champagne); padding-bottom: 4px; }
+    .essence { background: var(--black); color: var(--text); display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 45px; }
+    .essence-image { min-height: 300px; background: url("https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=1200&q=85") center/cover; }
+    .essence-copy { max-width: 550px; }
+    .essence-copy p:not(.eyebrow) { color: var(--muted); font-size: 12px; line-height: 2; }
+    .contact { text-align: center; background: var(--ivory-deep); }
+    .contact .buttons { justify-content: center; }
+    footer { background: #100f0d; color: var(--muted); padding: 32px 5%; text-align: center; font-size: 10px; line-height: 2; }
+    footer .brand-name { font-size: 25px; }
+    .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 22px; margin: 15px 0; }
+    .footer-links a:hover { color: var(--gold-light); }
+    .whatsapp-float { position: fixed; right: 20px; bottom: 20px; z-index: 9; background: #247b52; color: white; padding: 13px 17px; border-radius: 30px; font-size: 11px; box-shadow: 0 6px 24px #0003; }
+    @media (max-width: 900px) {
+      .nav-wrap { min-height: 75px; padding: 12px 4%; }
+      .brand { min-width: auto; }
+      .brand-name { font-size: 29px; }
+      .nav-actions { display: none; }
+      nav { gap: 15px; }
+      nav a { font-size: 9px; }
+      .hero { grid-template-columns: 1fr; min-height: 490px; background-position: 58% center; }
+      .hero-copy { padding: 65px 7%; max-width: 650px; }
+      .hero-art { display: none; }
+      .category-grid, .product-grid { grid-template-columns: repeat(2,1fr); }
+      .essence { gap: 25px; }
     }
-    .button.secondary { background: transparent; color: var(--ivory); border-color: #756650; }
-    .button:hover { opacity: .85; }
-    .phoenix-art {
-      min-height: 330px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid #C4A16C55;
-      outline: 1px solid #C4A16C22;
-      outline-offset: 12px;
-      color: var(--champagne);
-      text-align: center;
-      background: radial-gradient(circle, #c4a16c12, transparent 68%);
-    }
-    .phoenix-art .symbol { font-size: clamp(90px, 15vw, 165px); line-height: 1.1; }
-    .phoenix-art .wordmark { font: 26px 'Cormorant Garamond', serif; letter-spacing: 8px; }
-    .phoenix-art small { display: block; color: var(--ivory); font-size: 8px; letter-spacing: 3px; }
-    section { padding: 78px 8%; }
-    .section-heading { text-align: center; margin-bottom: 38px; }
-    .section-heading h2 { font-size: clamp(36px, 5vw, 52px); margin: 10px 0; }
-    .section-heading p { color: var(--muted); font-size: 12px; }
-    .categories {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 15px;
-    }
-    .category {
-      min-height: 205px;
-      padding: 25px 12px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      border: 1px solid #C4A16C40;
-      background: linear-gradient(145deg, #28231b, #1b1916);
-      transition: transform .2s, border-color .2s;
-    }
-    .category:hover { transform: translateY(-4px); border-color: var(--champagne); }
-    .category .icon { font-size: 31px; }
-    .category h3 { font-size: 25px; margin: 13px 0 3px; }
-    .category p { color: var(--muted); font-size: 10px; }
-    .story {
-      background: var(--ivory);
-      color: var(--black);
-      text-align: center;
-    }
-    .story .eyebrow { color: #8a6930; }
-    .story h2 { font-size: clamp(36px, 5vw, 52px); margin: 12px 0; }
-    .story p { max-width: 650px; margin: 0 auto; font-size: 13px; color: #554b3e; }
-    .story .signature { margin-top: 20px; color: #8a6930; font: italic 24px 'Cormorant Garamond', serif; }
-    .contact { text-align: center; }
-    .contact h2 { font-size: 45px; margin: 12px 0; }
-    .contact p { color: var(--muted); font-size: 12px; }
-    footer {
-      padding: 30px 7%;
-      text-align: center;
-      border-top: 1px solid #ffffff20;
-      color: var(--muted);
-      font-size: 10px;
-    }
-    footer strong { color: var(--champagne); letter-spacing: 3px; }
-    @media (max-width: 760px) {
-      header { flex-direction: column; padding: 18px 5%; }
-      nav { justify-content: center; gap: 13px 19px; }
-      .hero { grid-template-columns: 1fr; padding: 65px 7%; gap: 40px; }
-      .phoenix-art { min-height: 245px; }
-      .categories { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-      section { padding: 60px 6%; }
-      .category { min-height: 175px; }
+    @media (max-width: 620px) {
+      .announcement { justify-content: center; text-align: center; font-size: 8px; letter-spacing: 1px; }
+      .announcement span:last-child { display: none; }
+      .nav-wrap { flex-wrap: wrap; }
+      .brand-name { font-size: 28px; }
+      .phoenix-mark { width: 34px; height: 43px; }
+      .menu-toggle { display: block; margin-left: auto; }
+      nav { display: none; width: 100%; flex-direction: column; align-items: stretch; gap: 0; padding: 8px 0 3px; }
+      nav.open { display: flex; }
+      nav a { padding: 13px 5px; border-top: 1px solid rgba(196,161,108,.16); font-size: 11px; }
+      .hero { min-height: 570px; background-position: 59% center; }
+      .hero::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg,rgba(18,15,12,.96),rgba(18,15,12,.73) 64%,rgba(18,15,12,.38)); }
+      .hero-copy { padding: 58px 7%; }
+      h1 { font-size: clamp(43px, 12vw, 62px); }
+      .hero-copy > p:not(.eyebrow) { font-size: 12px; }
+      .categories, .featured, .essence, .contact { padding: 43px 5%; }
+      .category-grid { gap: 9px; }
+      .category-card { height: 170px; }
+      .category-label { left: 11px; bottom: 12px; }
+      .category-label strong { font-size: 18px; }
+      .category-label span { font-size: 9px; max-width: 85%; }
+      .circle-arrow { width: 25px; height: 25px; right: 9px; bottom: 12px; font-size: 12px; }
+      .product-grid { gap: 10px; }
+      .product-info { padding: 11px; }
+      .product-info h3 { font-size: 18px; }
+      .product-info p { font-size: 9px; }
+      .product-bottom { align-items: flex-start; flex-direction: column; }
+      .essence { grid-template-columns: 1fr; }
+      .essence-image { min-height: 220px; order: 2; }
+      .whatsapp-float { right: 12px; bottom: 12px; padding: 12px 14px; }
     }
   </style>
 </head>
 <body>
-  <div class="announcement">FÉNIX · Belleza, accesorios y detalles con intención</div>
+  <div class="announcement">
+    <span>FÉNIX · Belleza, accesorios y detalles con intención</span>
+    <span>Envíos a Colombia &nbsp; | &nbsp; Una marca para todas las formas de ser</span>
+  </div>
 
   <header>
-    <a class="brand" href="#inicio">FÉNIX<small>RENACE A TU MANERA</small></a>
-    <nav aria-label="Navegación principal">
-      <a href="#inicio">INICIO</a>
-      <a href="#categorias">CATEGORÍAS</a>
-      <a href="#historia">NUESTRA ESENCIA</a>
-      <a href="#contacto">CONTACTO</a>
-    </nav>
+    <div class="nav-wrap">
+      <a class="brand" href="#inicio" aria-label="FÉNIX, inicio">
+        <svg class="phoenix-mark" viewBox="0 0 64 84" fill="none" aria-hidden="true">
+          <path d="M33 78C20 67 15 55 19 43C8 49 6 60 11 68C-1 54 2 38 18 28C11 29 7 26 6 20C18 22 25 15 29 3C34 15 32 25 25 35C39 26 43 15 41 7C54 20 49 37 36 46C46 43 54 35 56 27C64 43 53 55 41 61C45 67 42 74 33 78Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M28 77C31 63 30 51 24 42M31 65C39 56 45 52 52 51M25 51C17 48 13 43 12 38M32 44C38 35 39 27 37 20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+        <div>
+          <div class="brand-name">FÉNIX</div>
+          <div class="brand-tag">RENACE A TU MANERA</div>
+        </div>
+      </a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false">☰ MENÚ</button>
+      <nav id="mainNav">
+        <a href="#inicio">Inicio</a>
+        <a href="#categorias">Categorías</a>
+        <a href="#esencia">Nuestra esencia</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+      <div class="nav-actions" aria-label="Accesos rápidos"><span>⌕</span><span>♡</span><span>♧</span></div>
+    </div>
   </header>
 
   <main>
     <section class="hero" id="inicio">
-      <div>
-        <div class="eyebrow">Una nueva forma de expresarte</div>
+      <div class="hero-copy">
+        <p class="eyebrow">Más que productos</p>
         <h1>Tu esencia.<br>Tu historia.<br><em>Tu renacer.</em></h1>
-        <p>Detalles que conectan contigo. Descubre accesorios, manillas hechas a mano, belleza y pequeños gustos que hablan de tu estilo.</p>
-        <div class="actions">
-          <a class="button" href="#categorias">Descubrir FÉNIX</a>
-          <a class="button secondary" href="#contacto">Hablemos</a>
+        <p>Detalles que conectan contigo. Descubre joyería, accesorios, maquillaje y cuidado capilar elegidos para expresar tu estilo.</p>
+        <div class="buttons">
+          <a class="btn btn-gold" href="#categorias">Descubrir FÉNIX <span>→</span></a>
+          <a class="btn btn-outline" href="https://wa.me/message/FNSRH6O3RMZLD1" target="_blank" rel="noopener">Hablemos</a>
         </div>
       </div>
-      <div class="phoenix-art" aria-label="Emblema tipográfico de FÉNIX">
-        <div>
-          <div class="symbol">✧</div>
-          <div class="wordmark">FÉNIX</div>
-          <small>RENACE A TU MANERA</small>
-        </div>
-      </div>
+      <div class="hero-art" aria-hidden="true"></div>
     </section>
 
-    <section id="categorias">
+    <section class="categories" id="categorias">
       <div class="section-heading">
-        <div class="eyebrow">Encuentra tu próximo favorito</div>
-        <h2>El universo FÉNIX</h2>
-        <p>Explora nuestras categorías y encuentra ese detalle que conecta contigo.</p>
+        <p class="eyebrow">Encuentra tu próximo favorito</p>
+        <h2>Nuestras categorías</h2>
+        <p class="section-sub">Pequeños detalles, grandes formas de expresar quién eres.</p>
       </div>
-      <div class="categories">
-        <a class="category" href="#contacto"><span class="icon">◇</span><h3>Manillas</h3><p>Tejidas a mano y diseños especiales</p></a>
-        <a class="category" href="#contacto"><span class="icon">✧</span><h3>Accesorios</h3><p>Detalles que expresan tu estilo</p></a>
-        <a class="category" href="#contacto"><span class="icon">❋</span><h3>Maquillaje</h3><p>Color, creatividad y expresión</p></a>
-        <a class="category" href="#contacto"><span class="icon">❧</span><h3>Capilar</h3><p>Cuidado para tu rutina</p></a>
+      <div class="category-grid">
+        <a class="category-card" href="#productos">
+          <img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=900&q=80" alt="Joyería dorada y accesorios">
+          <div class="category-label"><strong>Joyería de oro 18K</strong><span>Diseños que perduran</span></div><span class="circle-arrow">→</span>
+        </a>
+        <a class="category-card" href="#productos">
+          <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=900&q=80" alt="Accesorios de estilo">
+          <div class="category-label"><strong>Accesorios</strong><span>Detalles que expresan tu estilo</span></div><span class="circle-arrow">→</span>
+        </a>
+        <a class="category-card" href="#productos">
+          <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80" alt="Productos de maquillaje">
+          <div class="category-label"><strong>Maquillaje</strong><span>Belleza y color para cada momento</span></div><span class="circle-arrow">→</span>
+        </a>
+        <a class="category-card" href="#productos">
+          <img src="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=900&q=80" alt="Productos de cuidado personal y capilar">
+          <div class="category-label"><strong>Cuidado capilar</strong><span>Tu ritual de cuidado</span></div><span class="circle-arrow">→</span>
+        </a>
       </div>
     </section>
 
-    <section class="story" id="historia">
-      <div class="eyebrow">Más que una marca</div>
-      <h2>Renace a tu manera.</h2>
-      <p>FÉNIX nace de la idea de que cada historia puede abrir un nuevo comienzo. Creamos y seleccionamos detalles para que cada persona explore su estilo, celebre su esencia y encuentre nuevas formas de expresarse. Sin moldes. A tu manera.</p>
-      <div class="signature">Tu esencia merece brillar.</div>
+    <section class="featured" id="productos">
+      <div class="section-heading">
+        <p class="eyebrow">Detalles con intención</p>
+        <h2>Productos destacados</h2>
+        <p class="section-sub">Una selección pensada para ti. Calidad, estilo y propósito en cada detalle.</p>
+      </div>
+      <div class="product-grid">
+        <article class="product-card">
+          <div class="product-image"><img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=800&q=80" alt="Joyería dorada"></div>
+          <div class="product-info"><span class="product-kicker">Diseño especial</span><h3>Manillas de oro 18K</h3><p>Diseños exclusivos, creados para acompañar tu historia. Consulta disponibilidad y cotización.</p><div class="product-bottom"><span class="price">Precio por consultar</span><a class="small-link" href="https://wa.me/message/FNSRH6O3RMZLD1" target="_blank" rel="noopener">Consultar ↗</a></div></div>
+        </article>
+        <article class="product-card">
+          <div class="product-image"><img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=800&q=80" alt="Bolso y accesorios"></div>
+          <div class="product-info"><span class="product-kicker">Detalles para tu estilo</span><h3>Accesorios</h3><p>Encuentra ese detalle que conecta contigo y complementa tu forma de expresarte.</p><div class="product-bottom"><span class="price">Ver disponibilidad</span><a class="small-link" href="https://wa.me/message/FNSRH6O3RMZLD1" target="_blank" rel="noopener">Consultar ↗</a></div></div>
+        </article>
+        <article class="product-card">
+          <div class="product-image"><img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=80" alt="Maquillaje y cosméticos"></div>
+          <div class="product-info"><span class="product-kicker">Belleza y expresión</span><h3>Maquillaje</h3><p>Productos seleccionados para acompañar tus gustos, colores y momentos.</p><div class="product-bottom"><span class="price">Ver disponibilidad</span><a class="small-link" href="https://wa.me/message/FNSRH6O3RMZLD1" target="_blank" rel="noopener">Consultar ↗</a></div></div>
+        </article>
+        <article class="product-card">
+          <div class="product-image"><img src="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=800&q=80" alt="Cuidado capilar"></div>
+          <div class="product-info"><span class="product-kicker">Tu ritual de cuidado</span><h3>Cuidado capilar</h3><p>Descubre opciones para complementar tu rutina de cuidado personal.</p><div class="product-bottom"><span class="price">Ver disponibilidad</span><a class="small-link" href="https://wa.me/message/FNSRH6O3RMZLD1" target="_blank" rel="noopener">Consultar ↗</a></div></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="essence" id="esencia">
+      <div class="essence-image" role="img" aria-label="Detalle de joyería en tonos dorados"></div>
+      <div class="essence-copy">
+        <p class="eyebrow">Más que una marca</p>
+        <h2>Renace a tu manera.</h2>
+        <p>FÉNIX nace de la idea de que cada historia puede abrir un nuevo comienzo. Reunimos joyería, accesorios, maquillaje y cuidado capilar para que cada persona explore su estilo y encuentre nuevas formas de expresarse.</p>
+        <p>Sin moldes. A tu manera. Una marca inclusiva donde cada detalle tiene intención.</p>
+        <a class="btn btn-gold" href="https://www.instagram.com/somosfenix.co/" target="_blank" rel="noopener">Conoce FÉNIX en Instagram →</a>
+      </div>
     </section>
 
     <section class="contact" id="contacto">
-      <div class="eyebrow">Estamos aquí para ayudarte</div>
-      <h2>Encuentra tu próximo favorito</h2>
-      <p>¿Buscas un diseño especial o quieres conocer nuestros productos?</p>
-      <p>Escríbenos y te ayudaremos a encontrar la mejor opción para ti.</p>
-      <div class="actions" style="justify-content:center">
-        <a class="button" href="https://wa.me/message/FNSRH6O3RMZLD1" target="_blank" rel="noopener noreferrer">Escribir por WhatsApp</a>
-        <a class="button secondary" href="https://www.instagram.com/somosfenix.co/" target="_blank" rel="noopener noreferrer">Instagram FÉNIX</a>
+      <div class="section-heading">
+        <p class="eyebrow">Estamos aquí para ayudarte</p>
+        <h2>Encuentra tu próximo favorito</h2>
+        <p class="section-sub">¿Buscas un diseño especial o quieres conocer nuestros productos? Escríbenos y te ayudaremos a encontrar una opción para ti.</p>
+        <div class="buttons">
+          <a class="btn btn-gold" href="https://wa.me/message/FNSRH6O3RMZLD1" target="_blank" rel="noopener">Escribir por WhatsApp ↗</a>
+          <a class="btn btn-outline" style="color:var(--black);border-color:var(--black)" href="https://www.instagram.com/somosfenix.co/" target="_blank" rel="noopener">Instagram FÉNIX ↗</a>
+        </div>
       </div>
     </section>
   </main>
 
   <footer>
-    <strong>FÉNIX</strong>
-    <p>Renace a tu manera · Itagüí, Antioquia, Colombia</p>
-    <p>© <span id="year"></span> FÉNIX. Todos los derechos reservados.</p>
+    <div class="brand-name">FÉNIX</div>
+    <div>Renace a tu manera · Itagüí, Antioquia, Colombia</div>
+    <div class="footer-links"><a href="#inicio">Inicio</a><a href="#categorias">Categorías</a><a href="#esencia">Nuestra esencia</a><a href="#contacto">Contacto</a><a href="mailto:somosfenix.col@gmail.com">Correo</a></div>
+    <div>© <span id="year"></span> FÉNIX. Todos los derechos reservados.</div>
   </footer>
+
+  <a class="whatsapp-float" href="https://wa.me/message/FNSRH6O3RMZLD1" target="_blank" rel="noopener" aria-label="Contactar a FÉNIX por WhatsApp">WhatsApp ↗</a>
+
   <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const mainNav = document.getElementById('mainNav');
+    menuToggle.addEventListener('click', () => {
+      const isOpen = mainNav.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+      menuToggle.textContent = isOpen ? '✕ CERRAR' : '☰ MENÚ';
+    });
+    mainNav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      mainNav.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.textContent = '☰ MENÚ';
+    }));
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
