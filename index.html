@@ -27,8 +27,26 @@ img{max-width:100%}
 .main-nav a:hover,.main-nav a:focus{color:var(--oro-claro);border-color:var(--oro)}
 .header-actions{display:flex;gap:15px;align-items:center;font-size:22px}
 .menu-toggle{display:none;background:transparent;border:0;color:var(--marfil);font-size:25px;cursor:pointer}
-.hero{min-height:275px;display:flex;align-items:center;position:relative;overflow:hidden;border-bottom:1px solid var(--borde);background-image:linear-gradient(90deg,rgba(9,7,5,.97) 0%,rgba(9,7,5,.82) 34%,rgba(9,7,5,.08) 100%),url('accesorios.jpg');background-position:center 48%;background-size:cover}
-.hero-content{max-width:570px;padding:25px 6.1%;position:relative;z-index:1}
+.hero{
+  min-height:clamp(420px,42vw,600px);
+  display:flex;
+  align-items:center;
+  position:relative;
+  overflow:hidden;
+  border-bottom:1px solid var(--borde);
+  background-image:
+    linear-gradient(90deg,
+      rgba(9,7,5,.92) 0%,
+      rgba(9,7,5,.72) 32%,
+      rgba(9,7,5,.20) 65%,
+      rgba(9,7,5,.08) 100%
+    ),
+    url('hero-fenix.png');
+  background-position:center;
+  background-size:cover;
+  background-repeat:no-repeat;
+}
+ .hero-content{max-width:570px;padding:25px 6.1%;position:relative;z-index:1}
 .kicker{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--oro-claro);margin:0 0 8px}
 .hero h1{font-family:'Bodoni Moda',Georgia,serif;font-weight:400;font-size:clamp(38px,4.4vw,53px);letter-spacing:-.8px;line-height:.94;margin:0 0 10px}
 .hero h1 em{color:var(--oro);font-weight:400}
