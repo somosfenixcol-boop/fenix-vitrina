@@ -117,6 +117,91 @@ background-repeat: no-repeat;
  .site-footer{padding:14px 5%}.whatsapp-float{right:10px;bottom:10px}
 }
 @media(max-width:380px){.hero h1{font-size:40px}.product-card img,.featured .product-card img{height:125px}.card-body h3{font-size:15px}.arrow-circle{position:static;margin-top:7px}.card-body{min-height:105px}}
+
+/* PANEL LATERAL DE FILTROS FÉNIX */
+.product-layout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.filter-sidebar {
+  background: #17110b;
+  color: #f4ead9;
+  border: 1px solid #c9a46b;
+  border-radius: 8px;
+  padding: 20px 16px;
+  position: sticky;
+  top: 100px;
+}
+
+.filter-sidebar h3 {
+  color: #d8b477;
+  font-family: 'Bodoni Moda', Georgia, serif;
+  font-size: 21px;
+  font-weight: 400;
+  margin: 0 0 22px;
+}
+
+.filter-title {
+  color: #d8b477;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 18px 0 12px;
+}
+
+.filter-sidebar label {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 12px;
+  margin: 13px 0;
+  cursor: pointer;
+}
+
+.category-filter {
+  accent-color: #c9a46b;
+  cursor: pointer;
+}
+
+#clearFilters {
+  width: 100%;
+  margin-top: 20px;
+  padding: 11px;
+  background: transparent;
+  border: 1px solid #c9a46b;
+  color: #e5c58d;
+  cursor: pointer;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+#clearFilters:hover {
+  background: #c9a46b;
+  color: #17110b;
+}
+
+.product-layout .product-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+@media (max-width: 760px) {
+  .product-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-sidebar {
+    position: static;
+  }
+
+  .product-layout .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 </style>
 </head>
 <body>
@@ -142,12 +227,30 @@ background-repeat: no-repeat;
 <a class="product-card" href="#productos"><img src="maquillaje.jpg" alt="Maquillaje en tonos cálidos"><div class="card-body"><p class="card-label">Belleza sin límites</p><h3>Maquillaje</h3><p>Color y belleza para cada momento.</p><span class="arrow-circle">→</span></div></a>
 </div></section>
 <section class="section dark-decor featured" id="productos"><div class="section-heading"><p class="kicker">Detalles con intención</p><h2>Productos destacados</h2><div class="flourish">♧</div><p class="section-subtitle">Una selección pensada para ti. Calidad, estilo y propósito en cada detalle.</p></div>
-<div class="product-grid">
-<a class="product-card" href="https://wa.me/message/FNSRH6O3RMZLD1" target="_blank" rel="noopener"><img src="capilar.jep.jpg" alt="Accesorios para el cabello"><div class="card-body"><p class="card-label">Accesorios para el cabello</p><h3>Accesorios capilares</h3><p>Detalles que complementan tu día a día con estilo.</p><span class="arrow-circle">→</span></div></a>
-<a class="product-card" href="https://wa.me/message/FNSRH6O3RMZLD1" target="_blank" rel="noopener"><img src="maquillaje.jep.jpg" alt="Maquillaje en tonos nude y dorados"><div class="card-body"><p class="card-label">Belleza con intención</p><h3>Maquillaje</h3><p>Productos seleccionados para resaltar tu esencia.</p><span class="arrow-circle">→</span></div></a>
-<a class="product-card" href="https://wa.me/message/FNSRH6O3RMZLD1" target="_blank" rel="noopener"><img src="accesorios.jep.jpg" alt="Accesorios y joyería"><div class="card-body"><p class="card-label">Detalles que inspiran</p><h3>Accesorios</h3><p>Joyería y detalles que expresan tu estilo.</p><span class="arrow-circle">→</span></div></a>
-<a class="product-card" href="https://wa.me/message/FNSRH6O3RMZLD1" target="_blank" rel="noopener"><img src="manillas.jep.jpg" alt="Manillas tejidas artesanales"><div class="card-body"><p class="card-label">Diseños únicos</p><h3>Manillas</h3><p>Diseños que conectan contigo y cuentan tu historia.</p><span class="arrow-circle">→</span></div></a>
-</div></section>
+<div class="product-layout">
+
+  <aside class="filter-sidebar">
+    <h3>Filtrar productos</h3>
+
+    <p class="filter-title">Categorías</p>
+
+    <label><input type="checkbox" value="manillas" class="category-filter"> Manillas</label>
+    <label><input type="checkbox" value="accesorios" class="category-filter"> Accesorios</label>
+    <label><input type="checkbox" value="maquillaje" class="category-filter"> Maquillaje</label>
+    <label><input type="checkbox" value="capilar" class="category-filter"> Cuidado capilar</label>
+    <label><input type="checkbox" value="skincare" class="category-filter"> Skincare</label>
+
+    <button type="button" id="clearFilters">Limpiar filtros</button>
+  </aside>
+
+  <div class="product-grid">
+<a class="product-card" data-category="capilar" href="https://wa.me/message/FNSRH6O3RMZLD1" target="_blank" rel="noopener"><img src="capilar.jep.jpg" alt="Accesorios para el cabello"><div class="card-body"><p class="card-label">Accesorios para el cabello</p><h3>Accesorios capilares</h3><p>Detalles que complementan tu día a día con estilo.</p><span class="arrow-circle">→</span></div></a>
+<a class="product-card" data-category="maquillaje" href="https://wa.me/message/FNSRH6O3RMZLD1" target="_blank" rel="noopener"><img src="maquillaje.jep.jpg" alt="Maquillaje en tonos nude y dorados"><div class="card-body"><p class="card-label">Belleza con intención</p><h3>Maquillaje</h3><p>Productos seleccionados para resaltar tu esencia.</p><span class="arrow-circle">→</span></div></a>
+<a class="product-card" data-category="accesorios" href="https://wa.me/message/FNSRH6O3RMZLD1" target="_blank" rel="noopener"><img src="accesorios.jep.jpg" alt="Accesorios y joyería"><div class="card-body"><p class="card-label">Detalles que inspiran</p><h3>Accesorios</h3><p>Joyería y detalles que expresan tu estilo.</p><span class="arrow-circle">→</span></div></a>
+<a class="product-card" data-category="manillas" href="https://wa.me/message/FNSRH6O3RMZLD1" target="_blank" rel="noopener"><img src="manillas.jep.jpg" alt="Manillas tejidas artesanales"><div class="card-body"><p class="card-label">Diseños únicos</p><h3>Manillas</h3><p>Diseños que conectan contigo y cuentan tu historia.</p><span class="arrow-circle">→</span></div></a>
+  </div>
+</div>
+</section>
 <section class="about-section" id="nosotros"><img class="about-image" src="accesorios.jpg" alt="Accesorios elegantes que inspiran el estilo FÉNIX"><div class="about-copy"><p class="kicker">Más que una marca</p><h2>Renace a tu manera.</h2><p>FÉNIX nace de la idea de que cada historia puede abrir un nuevo comienzo. Reunimos joyería, accesorios, maquillaje y cuidado capilar para que cada persona explore su estilo, celebre su esencia y encuentre nuevas formas de expresarse.</p><p>Sin moldes. A tu manera. Una marca inclusiva donde cada detalle tiene intención.</p><a class="button button-primary" href="https://www.instagram.com/somosfenix.co/" target="_blank" rel="noopener">Conoce FÉNIX en Instagram&nbsp; →</a></div></section>
 <section class="contact-section" id="contacto"><div class="section-heading"><p class="kicker">Estamos aquí para ayudarte</p><h2>Encuentra tu próximo favorito</h2><p class="section-subtitle">¿Buscas un diseño especial o quieres conocer nuestros productos?<br>Escríbenos y te ayudaremos a encontrar una opción para ti.</p><div class="button-row"><a class="button button-primary" href="https://wa.me/message/FNSRH6O3RMZLD1" target="_blank" rel="noopener">◉&nbsp; Escribir por WhatsApp →</a><a class="button button-outline" href="https://www.instagram.com/somosfenix.co/" target="_blank" rel="noopener">◎&nbsp; Instagram FÉNIX</a></div></div></section>
 </main>
@@ -367,6 +470,40 @@ fenixStyles.textContent = `
   }
 `;
 document.head.appendChild(fenixStyles);
+
+// FILTROS DE PRODUCTOS FÉNIX
+const filterOptions = document.querySelectorAll('.category-filter');
+const productCards = document.querySelectorAll(
+  '#productos .product-grid .product-card'
+);
+const clearFiltersButton = document.getElementById('clearFilters');
+
+function applyCategoryFilters() {
+  const selectedCategories = [...filterOptions]
+    .filter(option => option.checked)
+    .map(option => option.value);
+
+  productCards.forEach(card => {
+    const category = card.dataset.category;
+    const showCard =
+      selectedCategories.length === 0 ||
+      selectedCategories.includes(category);
+
+    card.style.display = showCard ? '' : 'none';
+  });
+}
+
+filterOptions.forEach(option => {
+  option.addEventListener('change', applyCategoryFilters);
+});
+
+clearFiltersButton.addEventListener('click', () => {
+  filterOptions.forEach(option => {
+    option.checked = false;
+  });
+
+  applyCategoryFilters();
+});
 
 </script>
 </body>
