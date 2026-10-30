@@ -742,26 +742,23 @@ clearFiltersButton.addEventListener('click', () => {
   applyCategoryFilters();
 });
 /* PROMOCIONES ROTATIVAS FÉNIX */
-const promoMensajes = [
-  "10% de descuento en tu segunda compra*",
-  "Envío gratis por compras superiores a $100.000"
-];
+document.addEventListener('DOMContentLoaded', function () {
+  const promoMensajes = [
+    "10% de descuento en tu segunda compra*",
+    "Envío gratis por compras superiores a $100.000"
+  ];
 
-let promoActual = 0;
-const promoElemento = document.getElementById('promoRotativo');
+  const promoElemento = document.getElementById('promoRotativo');
 
-if (promoElemento) {
-  setInterval(() => {
-    promoElemento.style.opacity = '0';
+  if (!promoElemento) return;
 
-    setTimeout(() => {
-      promoActual = (promoActual + 1) % promoMensajes.length;
-      promoElemento.textContent = promoMensajes[promoActual];
-      promoElemento.style.opacity = '1';
-    }, 400);
+  let promoActual = 0;
 
+  setInterval(function () {
+    promoActual = (promoActual + 1) % promoMensajes.length;
+    promoElemento.textContent = promoMensajes[promoActual];
   }, 3500);
-}
+});
 </script>
 </body>
 </html>
