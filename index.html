@@ -168,6 +168,181 @@ mainNav.querySelectorAll('a').forEach(function(link){
   menuToggle.textContent='☰';
  });
 });
+  
+// BUSCADOR DE PRODUCTOS
+const searchBtn = document.getElementById('searchBtn');
+const favoritesBtn = document.getElementById('favoritesBtn');
+const fenixMenuBtn = document.getElementById('fenixMenuBtn');
+
+const products = [...document.querySelectorAll('.product-card')];
+let favorites = JSON.parse(localStorage.getItem('fenixFavorites') || '[]');
+
+function showPanel(title, content) {
+  document.getElementById('fenixPanel')?.remove();
+
+  const panel = document.createElement('div');
+  panel.id = 'fenixPanel';
+  panel.innerHTML = `
+    <div class="fenix-panel-content">
+      <button id="closeFenixPanel" class="fenix-close">×</button>
+      <h2>${title}</h2>
+      <div id="fenixPanelBody">${content}</div>
+    </div>
+  `;
+  document.body.appendChild(panel);
+
+  document.getElementById('closeFenixPanel').onclick = () => panel.remove();
+  panel.onclick = e => {
+    if (e.target === panel) panel.remove();
+  };
+}
+
+// BUSCAR
+searchBtn.addEventListener('click', () => {
+  showPanel('Buscar en FÉNIX', `
+    <input id="fenixSearch" type="search"
+      placeholder="Busca manillas, maquillaje, accesorios..."
+      style="width:100%;padding:13px;margin-top:15px">
+    <div id="fenixResults"></div>
+  `);
+
+  const input = document.getElementById('fenixSearch');
+  const results = document.getElementById('fenixResults');
+
+  input.focus();
+
+  input.addEventListener('input', () => {
+    const term = input.value.toLowerCase().trim();
+
+    const matches = products.filter(card =>
+      card.innerText.toLowerCase().includes(term) ||
+      card.querySelector('img')?.alt.toLowerCase().includes(term)
+    );
+
+    results.innerHTML = matches.length
+      ? matches.map(card => {
+          const link = card.getAttribute('href') || '#productos';
+          const name = card.querySelector('.card-body')?.innerText || card.innerText;
+          const img = card.querySelector('img')?.getAttribute('src') || '';
+          return `<a class="fenix-result" href="${link}">
+            <img src="${img}" alt="">
+            <span>${name}</span>
+          </a>`;
+        }).join('')
+      : '<p>No encontramos productos con esa búsqueda.</p>';
+  });
+});
+
+// FAVORITOS
+function saveFavorites() {
+  localStorage.setItem('fenixFavorites', JSON.stringify(favorites));
+}
+
+function refreshFavoriteButtons() {
+  products.forEach((card, index) => {
+    const button = card.querySelector('.fenix-favorite');
+    if (button) {
+      button.textContent = favorites.includes(index) ? '♥' : '♡';
+    }
+  });
+}
+
+products.forEach((card, index) => {
+  const button = document.createElement('button');
+  button.className = 'fenix-favorite';
+  button.type = 'button';
+  button.setAttribute('aria-label', 'Guardar en favoritos');
+  button.textContent = favorites.includes(index) ? '♥' : '♡';
+
+  button.addEventListener('click', event => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    favorites = favorites.includes(index)
+      ? favorites.filter(item => item !== index)
+      : [...favorites, index];
+
+    saveFavorites();
+    refreshFavoriteButtons();
+  });
+
+  card.style.position = 'relative';
+  card.appendChild(button);
+});
+
+favoritesBtn.addEventListener('click', () => {
+  const saved = favorites
+    .map(index => products[index])
+    .filter(Boolean);
+
+  showPanel('Mis favoritos ♥', saved.length
+    ? saved.map(card => {
+        const img = card.querySelector('img')?.getAttribute('src') || '';
+        const name = card.querySelector('.card-body')?.innerText || card.innerText;
+        return `<div class="fenix-result">
+          <img src="${img}" alt="">
+          <span>${name}</span>
+        </div>`;
+      }).join('')
+    : '<p>Aún no tienes favoritos. Guarda aquí los productos que te encantan.</p>'
+  );
+});
+
+// MENÚ FÉNIX
+fenixMenuBtn.addEventListener('click', () => {
+  showPanel('Bienvenido a FÉNIX', `
+    <nav class="fenix-links">
+      <a href="#nosotros">Nuestra historia</a>
+      <a href="https://www.instagram.com/somosfenix.co/" target="_blank">Instagram</a>
+      <a href="https://wa.me/message/FNSRH6O3RMZLD1" target="_blank">Contáctanos por WhatsApp</a>
+    </nav>
+  `);
+});
+
+// ESTILOS DE LOS PANELES
+const fenixStyles = document.createElement('style');
+fenixStyles.textContent = `
+  #fenixPanel {
+    position:fixed; inset:0; z-index:9999;
+    background:rgba(0,0,0,.78);
+    display:flex; justify-content:center; align-items:center;
+    padding:20px;
+  }
+  .fenix-panel-content {
+    position:relative; background:#17110b; color:#f8edda;
+    border:1px solid #c9a46b; padding:35px;
+    width:min(480px,100%); max-height:80vh; overflow:auto;
+  }
+  .fenix-panel-content h2 {
+    font-family:Georgia,serif; font-weight:normal;
+    color:#d8b477; margin:0 35px 20px 0;
+  }
+  .fenix-close {
+    position:absolute; right:15px; top:10px;
+    background:none; border:0; color:#d8b477;
+    font-size:30px; cursor:pointer;
+  }
+  .fenix-result {
+    display:flex; align-items:center; gap:14px;
+    color:#f8edda; padding:10px 0;
+    text-decoration:none; border-bottom:1px solid #493820;
+  }
+  .fenix-result img {
+    width:65px; height:65px; object-fit:cover;
+  }
+  .fenix-links a {
+    display:block; color:#f8edda; padding:14px 0;
+    text-decoration:none; border-bottom:1px solid #493820;
+  }
+  .fenix-favorite {
+    position:absolute; top:10px; right:10px; z-index:5;
+    background:#17110b; color:#d8b477;
+    border:1px solid #c9a46b; border-radius:50%;
+    width:35px; height:35px; cursor:pointer; font-size:20px;
+  }
+`;
+document.head.appendChild(fenixStyles);
+
 </script>
 </body>
 </html>
