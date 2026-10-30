@@ -638,7 +638,48 @@ function showPanel(title, content) {
     if (e.target === panel) panel.remove();
   };
 }
+// CARRITO DE COMPRAS FENIX
+const cartBtn = document.getElementById('cartBtn');
 
+let cart = JSON.parse(localStorage.getItem('fenixCart') || '[]');
+
+function actualizarContadorCarrito() {
+  const contador = document.getElementById('cartCount');
+  if (contador) {
+    contador.textContent = cart.reduce((total, item) => total + item.quantity, 0);
+  }
+}
+
+function abrirCarrito() {
+  let contenido = '';
+
+  if (cart.length === 0) {
+    contenido = '<p>Tu carrito está vacío.</p>';
+  } else {
+    contenido = cart.map((item, index) => `
+      <div class="cart-item">
+        <p><strong>${item.name}</strong></p>
+        <p>Cantidad: ${item.quantity}</p>
+        <button onclick="eliminarDelCarrito(${index})">Eliminar</button>
+      </div>
+    `).join('');
+  }
+
+  showPanel('Mi carrito', contenido);
+}
+
+function eliminarDelCarrito(index) {
+  cart.splice(index, 1);
+  localStorage.setItem('fenixCart', JSON.stringify(cart));
+  actualizarContadorCarrito();
+  abrirCarrito();
+}
+
+if (cartBtn) {
+  cartBtn.addEventListener('click', abrirCarrito);
+}
+
+actualizarContadorCarrito();
 // BUSCAR
 
 
