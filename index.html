@@ -816,24 +816,26 @@ clearFiltersButton.addEventListener('click', () => {
 
   applyCategoryFilters();
 });
-/* PROMOCIONES ROTATIVAS FÉNIX */
-document.addEventListener('DOMContentLoaded', function () {
-  const promoMensajes = [
+
+</script>
+  <script>
+(function () {
+  const mensajes = [
     "10% de descuento en tu segunda compra*",
     "Envío gratis por compras superiores a $100.000"
   ];
 
-  const promoElemento = document.getElementById('promoRotativo');
+  const elemento = document.getElementById("promoRotativo");
 
-  if (!promoElemento) return;
+  if (!elemento) return;
 
-  let promoActual = 0;
+  let indice = 0;
 
   setInterval(function () {
-    promoActual = (promoActual + 1) % promoMensajes.length;
-    promoElemento.textContent = promoMensajes[promoActual];
+    indice = (indice + 1) % mensajes.length;
+    elemento.textContent = mensajes[indice];
   }, 3500);
-});
+})();
 </script>
   <!-- PIE DE PÁGINA FÉNIX -->
 <footer class="fenix-footer">
