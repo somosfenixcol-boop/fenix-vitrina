@@ -337,11 +337,43 @@ background-repeat: no-repeat;
   font-size: 13px;
 }
 
+  /* FRANJA PROMOCIONAL FÉNIX */
+.top-strip {
+  width: 100%;
+  min-height: 34px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 7px 15px;
+  background: linear-gradient(90deg, #100c08, #24180e, #100c08);
+  border-bottom: 1px solid #a9854f;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+#promoRotativo {
+  color: #e5c58d;
+  font-family: Georgia, serif;
+  font-size: 13px;
+  letter-spacing: 1px;
+  transition: opacity .4s ease;
+}
+
+@media (max-width: 600px) {
+  #promoRotativo {
+    font-size: 11px;
+  }
+}
 </style>
 </head>
 <body>
-<div class="top-strip"><span>FÉNIX · Belleza, accesorios y detalles con intención</span><span>Envíos a Colombia · Una marca para todas las formas de ser</span></div>
-<header class="site-header">
+<div class="top-strip">
+  <span id="promoRotativo">
+    10% de descuento en tu segunda compra*
+  </span>
+</div>
+
+  <header class="site-header">
  <a class="logo" href="#inicio" aria-label="FÉNIX, inicio"><span class="logo-mark">♧</span><span><span class="logo-name">FÉNIX</span><span class="logo-tagline" style="display:block">RENACE A TU MANERA</span></span></a>
  <nav class="main-nav" id="mainNav" aria-label="Navegación principal"><a href="#inicio">Inicio</a><a href="#categorias">Categorías</a><a href="#productos">Productos</a><a href="#nosotros">Nosotros</a><a href="#contacto">Contacto</a></nav>
  <div class="header-actions">
@@ -709,7 +741,27 @@ clearFiltersButton.addEventListener('click', () => {
 
   applyCategoryFilters();
 });
+/* PROMOCIONES ROTATIVAS FÉNIX */
+const promoMensajes = [
+  "10% de descuento en tu segunda compra*",
+  "Envío gratis por compras superiores a $100.000"
+];
 
+let promoActual = 0;
+const promoElemento = document.getElementById('promoRotativo');
+
+if (promoElemento) {
+  setInterval(() => {
+    promoElemento.style.opacity = '0';
+
+    setTimeout(() => {
+      promoActual = (promoActual + 1) % promoMensajes.length;
+      promoElemento.textContent = promoMensajes[promoActual];
+      promoElemento.style.opacity = '1';
+    }, 400);
+
+  }, 3500);
+}
 </script>
 </body>
 </html>
