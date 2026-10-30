@@ -101,8 +101,50 @@ background-repeat: no-repeat;
 .site-footer .logo-mark,.site-footer .logo-tagline{display:none}
 .footer-location{font-size:9px;letter-spacing:1px;color:#dfd0bd;margin:5px 0}
 .copyright{font-size:9px;color:#c1ae96;margin:8px 0 0}
-.whatsapp-float{position:fixed;right:14px;bottom:13px;z-index:60;background:#16885a;color:#fff;border-radius:30px;padding:10px 15px;font-size:11px;font-weight:500;box-shadow:0 7px 22px rgba(0,0,0,.35)}
-@media(min-width:1300px){.hero{min-height:340px}.hero-content{padding-left:7%}.section{padding-left:5%;padding-right:5%}.product-card img{height:200px}.featured .product-card img{height:190px}.about-image{height:190px}}
+/* WHATSAPP FLOTANTE FENIX */
+.whatsapp-float {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 99999;
+  width: 54px;
+  height: 54px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #21170F;
+  color: #E5C58D;
+  border: 2px solid #C9A46B;
+  border-radius: 50%;
+  box-shadow: 0 5px 18px rgba(0,0,0,.35);
+  text-decoration: none;
+  box-sizing: border-box;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.whatsapp-float svg {
+  display: block;
+  width: 29px;
+  height: 29px;
+  max-width: 29px;
+  max-height: 29px;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.08);
+  box-shadow: 0 7px 22px rgba(0,0,0,.45);
+}
+
+@media (max-width: 600px) {
+  .whatsapp-float {
+    width: 50px;
+    height: 50px;
+    right: 16px;
+    bottom: 18px;
+  }
+}
+  @media(min-width:1300px){.hero{min-height:340px}.hero-content{padding-left:7%}.section{padding-left:5%;padding-right:5%}.product-card img{height:200px}.featured .product-card img{height:190px}.about-image{height:190px}}
 @media(max-width:760px){
  .top-strip{font-size:6px;letter-spacing:.8px;padding:5px 10px}.top-strip span:last-child{display:none}
  .site-header{height:64px;padding:0 15px;gap:8px}.logo-mark{font-size:29px}.logo-name{font-size:25px;letter-spacing:4px}.logo-tagline{font-size:6px;letter-spacing:1.5px}.header-actions{display:none}.menu-toggle{display:block}
@@ -114,7 +156,16 @@ background-repeat: no-repeat;
  .featured{padding-top:24px}.featured .product-card img{height:150px}
  .about-section{grid-template-columns:1fr}.about-image{height:200px}.about-copy{padding:20px 6%}.about-copy h2{font-size:30px}.about-copy p:not(.kicker){font-size:10px}
  .contact-section{padding:20px 15px}.contact-section .section-subtitle{font-size:10px}.contact-section .button-row{gap:7px}.contact-section .button{font-size:8px;padding:10px 12px}
- .site-footer{padding:14px 5%}.whatsapp-float{right:10px;bottom:10px}
+.site-footer {
+  padding: 14px 5%;
+}
+
+.whatsapp-float {
+  width: 50px;
+  height: 50px;
+  right: 16px;
+  bottom: 18px;
+}
 }
 @media(max-width:380px){.hero h1{font-size:40px}.product-card img,.featured .product-card img{height:125px}.card-body h3{font-size:15px}.arrow-circle{position:static;margin-top:7px}.card-body{min-height:105px}}
 
@@ -480,8 +531,22 @@ background-repeat: no-repeat;
 <section class="contact-section" id="contacto"><div class="section-heading"><p class="kicker">Estamos aquí para ayudarte</p><h2>Encuentra tu próximo favorito</h2><p class="section-subtitle">¿Buscas un diseño especial o quieres conocer nuestros productos?<br>Escríbenos y te ayudaremos a encontrar una opción para ti.</p><div class="button-row"><a class="button button-primary" href="https://wa.me/message/FNSRH6O3RMZLD1" target="_blank" rel="noopener">◉&nbsp; Escribir por WhatsApp →</a><a class="button button-outline" href="https://www.instagram.com/somosfenix.co/" target="_blank" rel="noopener">◎&nbsp; Instagram FÉNIX</a></div></div></section>
 </main>
 <footer class="site-footer"><a class="logo" href="#inicio"><span><span class="logo-name">FÉNIX</span></span></a><p class="footer-location">Renace a tu manera · Itagüí, Antioquia, Colombia</p><p class="copyright">© 2026 FÉNIX. Todos los derechos reservados.</p></footer>
-<a class="whatsapp-float" href="https://wa.me/message/FNSRH6O3RMZLD1" target="_blank" rel="noopener">WhatsApp ↗</a>
-<script>
+<a
+  class="whatsapp-float"
+  href="https://wa.me/message/FNSRH6O3RMZLD1"
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Contactar a FÉNIX por WhatsApp"
+>
+  <svg viewBox="0 0 32 32" aria-hidden="true">
+    <path d="M16 3.5a12 12 0 0 0-10.4 18L4 28l6.5-1.6A12 12 0 1 0 16 3.5Z"
+      fill="none" stroke="currentColor" stroke-width="1.8"
+      stroke-linejoin="round"/>
+    <path d="M11.2 9.5c-.5 0-1 .3-1.4.8-.5.6-1.3 1.6-1.3 3.5 0 2.1 1.5 4.3 1.8 4.6.2.3 2.9 4.7 7.2 6.3 3.5 1.3 4.2 1 5 .9.8-.1 2.5-1 2.9-2.1.4-1 .4-1.9.3-2.1-.1-.2-.4-.3-.8-.5l-2.7-1.3c-.4-.2-.7-.2-1 .2-.3.5-1.1 1.4-1.4 1.7-.2.3-.5.3-.9.1-.4-.2-1.8-.7-3.4-2.1-1.3-1.1-2.1-2.5-2.4-2.9-.2-.4 0-.7.2-.9.2-.2.4-.5.6-.7.2-.3.3-.5.4-.7.1-.3 0-.6 0-.8l-1.2-3c-.3-.7-.6-.8-1-.8h-.9Z"
+      fill="currentColor"/>
+  </svg>
+</a>
+  <script>
 const menuToggle=document.getElementById('menuToggle');
 const mainNav=document.getElementById('mainNav');
 menuToggle.addEventListener('click',function(){
@@ -867,8 +932,6 @@ clearFiltersButton.addEventListener('click', () => {
   </div>
 
 </footer>
-  <!-- WHATSAPP FLOTANTE FÉNIX -->
-<a
   href="https://wa.me/message/FNSRH6O3RMZLD1"
   class="fenix-whatsapp"
   target="_blank"
