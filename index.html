@@ -200,9 +200,11 @@ function showPanel(title, content) {
 // BUSCAR
 searchBtn.addEventListener('click', () => {
   showPanel('Buscar en FÉNIX', `
-    <input id="fenixSearch" type="search"
+    <input id="fenixSearch"
+      type="search"
       placeholder="Busca manillas, maquillaje, accesorios..."
       style="width:100%;padding:13px;margin-top:15px">
+
     <div id="fenixResults"></div>
   `);
 
@@ -211,6 +213,29 @@ searchBtn.addEventListener('click', () => {
 
   input.focus();
 
+  input.addEventListener('input', () => {
+    const term = input.value.toLowerCase().trim();
+
+    const matches = products.filter(card =>
+      card.innerText.toLowerCase().includes(term) ||
+      card.querySelector('img')?.alt.toLowerCase().includes(term)
+    );
+
+    results.innerHTML = matches.length
+      ? matches.map(card => {
+          const name = card.querySelector('.card-body')?.innerText || card.innerText;
+          const img = card.querySelector('img')?.getAttribute('src') || '';
+
+          return `
+            <div class="fenix-result">
+              <img src="${img}" alt="">
+              <span>${name}</span>
+            </div>
+          `;
+        }).join('')
+      : '<p>No encontramos productos con esa búsqueda.</p>';
+  });
+});
   input.addEventListener('input', () => {
     const term = input.value.toLowerCase().trim();
 
