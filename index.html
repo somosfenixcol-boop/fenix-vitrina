@@ -227,29 +227,12 @@ background-repeat: no-repeat;
 <a class="product-card" href="#productos"><img src="maquillaje.jpg" alt="Maquillaje en tonos cálidos"><div class="card-body"><p class="card-label">Belleza sin límites</p><h3>Maquillaje</h3><p>Color y belleza para cada momento.</p><span class="arrow-circle">→</span></div></a>
 </div></section>
 <section class="section dark-decor featured" id="productos"><div class="section-heading"><p class="kicker">Detalles con intención</p><h2>Productos destacados</h2><div class="flourish">♧</div><p class="section-subtitle">Una selección pensada para ti. Calidad, estilo y propósito en cada detalle.</p></div>
-<div class="product-layout">
-
-  <aside class="filter-sidebar">
-    <h3>Filtrar productos</h3>
-
-    <p class="filter-title">Categorías</p>
-
-    <label><input type="checkbox" value="manillas" class="category-filter"> Manillas</label>
-    <label><input type="checkbox" value="accesorios" class="category-filter"> Accesorios</label>
-    <label><input type="checkbox" value="maquillaje" class="category-filter"> Maquillaje</label>
-    <label><input type="checkbox" value="capilar" class="category-filter"> Cuidado capilar</label>
-    <label><input type="checkbox" value="skincare" class="category-filter"> Skincare</label>
-
-    <button type="button" id="clearFilters">Limpiar filtros</button>
-  </aside>
-
   <div class="product-grid">
 <a class="product-card" data-category="capilar" href="https://wa.me/message/FNSRH6O3RMZLD1" target="_blank" rel="noopener"><img src="capilar.jep.jpg" alt="Accesorios para el cabello"><div class="card-body"><p class="card-label">Accesorios para el cabello</p><h3>Accesorios capilares</h3><p>Detalles que complementan tu día a día con estilo.</p><span class="arrow-circle">→</span></div></a>
 <a class="product-card" data-category="maquillaje" href="https://wa.me/message/FNSRH6O3RMZLD1" target="_blank" rel="noopener"><img src="maquillaje.jep.jpg" alt="Maquillaje en tonos nude y dorados"><div class="card-body"><p class="card-label">Belleza con intención</p><h3>Maquillaje</h3><p>Productos seleccionados para resaltar tu esencia.</p><span class="arrow-circle">→</span></div></a>
 <a class="product-card" data-category="accesorios" href="https://wa.me/message/FNSRH6O3RMZLD1" target="_blank" rel="noopener"><img src="accesorios.jep.jpg" alt="Accesorios y joyería"><div class="card-body"><p class="card-label">Detalles que inspiran</p><h3>Accesorios</h3><p>Joyería y detalles que expresan tu estilo.</p><span class="arrow-circle">→</span></div></a>
 <a class="product-card" data-category="manillas" href="https://wa.me/message/FNSRH6O3RMZLD1" target="_blank" rel="noopener"><img src="manillas.jep.jpg" alt="Manillas tejidas artesanales"><div class="card-body"><p class="card-label">Diseños únicos</p><h3>Manillas</h3><p>Diseños que conectan contigo y cuentan tu historia.</p><span class="arrow-circle">→</span></div></a>
   </div>
-</div>
 </section>
 <section class="about-section" id="nosotros"><img class="about-image" src="accesorios.jpg" alt="Accesorios elegantes que inspiran el estilo FÉNIX"><div class="about-copy"><p class="kicker">Más que una marca</p><h2>Renace a tu manera.</h2><p>FÉNIX nace de la idea de que cada historia puede abrir un nuevo comienzo. Reunimos joyería, accesorios, maquillaje y cuidado capilar para que cada persona explore su estilo, celebre su esencia y encuentre nuevas formas de expresarse.</p><p>Sin moldes. A tu manera. Una marca inclusiva donde cada detalle tiene intención.</p><a class="button button-primary" href="https://www.instagram.com/somosfenix.co/" target="_blank" rel="noopener">Conoce FÉNIX en Instagram&nbsp; →</a></div></section>
 <section class="contact-section" id="contacto"><div class="section-heading"><p class="kicker">Estamos aquí para ayudarte</p><h2>Encuentra tu próximo favorito</h2><p class="section-subtitle">¿Buscas un diseño especial o quieres conocer nuestros productos?<br>Escríbenos y te ayudaremos a encontrar una opción para ti.</p><div class="button-row"><a class="button button-primary" href="https://wa.me/message/FNSRH6O3RMZLD1" target="_blank" rel="noopener">◉&nbsp; Escribir por WhatsApp →</a><a class="button button-outline" href="https://www.instagram.com/somosfenix.co/" target="_blank" rel="noopener">◎&nbsp; Instagram FÉNIX</a></div></div></section>
@@ -301,7 +284,75 @@ function showPanel(title, content) {
 }
 
 // BUSCAR
+
 searchBtn.addEventListener('click', () => {
+  showPanel('Buscar y filtrar en FÉNIX', `
+    <input id="fenixSearch" type="search"
+      placeholder="Buscar manillas, maquillaje, accesorios..."
+      style="width:100%;padding:13px;margin:10px 0 18px">
+
+    <p style="color:#c9a46b;letter-spacing:2px;font-size:11px">
+      CATEGORÍAS
+    </p>
+
+    <div class="fenix-filter-options">
+      <label><input type="checkbox" value="manillas" class="fenix-category-filter"> Manillas</label>
+      <label><input type="checkbox" value="accesorios" class="fenix-category-filter"> Accesorios</label>
+      <label><input type="checkbox" value="maquillaje" class="fenix-category-filter"> Maquillaje</label>
+      <label><input type="checkbox" value="capilar" class="fenix-category-filter"> Cuidado capilar</label>
+      <label><input type="checkbox" value="skincare" class="fenix-category-filter"> Skincare</label>
+    </div>
+
+    <button id="fenixClearFilters" type="button"
+      style="width:100%;padding:12px;margin-top:18px;background:#17110b;color:#e5c58d;border:1px solid #c9a46b">
+      Limpiar filtros
+    </button>
+
+    <div id="fenixResults" style="margin-top:15px"></div>
+  `);
+
+  const input = document.getElementById('fenixSearch');
+  const checks = document.querySelectorAll('.fenix-category-filter');
+  const results = document.getElementById('fenixResults');
+  const cards = document.querySelectorAll('#productos .product-card');
+
+  function updateResults() {
+    const term = input.value.toLowerCase().trim();
+    const selected = [...checks]
+      .filter(check => check.checked)
+      .map(check => check.value);
+
+    let visible = 0;
+
+    cards.forEach(card => {
+      const category = card.dataset.category;
+      const matchesCategory =
+        selected.length === 0 || selected.includes(category);
+      const matchesText = card.textContent.toLowerCase().includes(term);
+      const show = matchesCategory && matchesText;
+
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+
+    results.textContent = visible + ' productos encontrados';
+  }
+
+  input.addEventListener('input', updateResults);
+  checks.forEach(check =>
+    check.addEventListener('change', updateResults)
+  );
+
+  document.getElementById('fenixClearFilters').addEventListener('click', () => {
+    input.value = '';
+    checks.forEach(check => check.checked = false);
+    updateResults();
+  });
+
+  updateResults();
+  input.focus();
+});
+
   showPanel('Buscar en FÉNIX', `
     <input id="fenixSearch"
       type="search"
