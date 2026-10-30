@@ -353,65 +353,6 @@ searchBtn.addEventListener('click', () => {
   input.focus();
 });
 
-  showPanel('Buscar en FÉNIX', `
-    <input id="fenixSearch"
-      type="search"
-      placeholder="Busca manillas, maquillaje, accesorios..."
-      style="width:100%;padding:13px;margin-top:15px">
-
-    <div id="fenixResults"></div>
-  `);
-
-  const input = document.getElementById('fenixSearch');
-  const results = document.getElementById('fenixResults');
-
-  input.focus();
-
-  input.addEventListener('input', () => {
-    const term = input.value.toLowerCase().trim();
-
-    const matches = products.filter(card =>
-      card.innerText.toLowerCase().includes(term) ||
-      card.querySelector('img')?.alt.toLowerCase().includes(term)
-    );
-
-    results.innerHTML = matches.length
-      ? matches.map(card => {
-          const name = card.querySelector('.card-body')?.innerText || card.innerText;
-          const img = card.querySelector('img')?.getAttribute('src') || '';
-
-          return `
-            <div class="fenix-result">
-              <img src="${img}" alt="">
-              <span>${name}</span>
-            </div>
-          `;
-        }).join('')
-      : '<p>No encontramos productos con esa búsqueda.</p>';
-  });
-});
-  input.addEventListener('input', () => {
-    const term = input.value.toLowerCase().trim();
-
-    const matches = products.filter(card =>
-      card.innerText.toLowerCase().includes(term) ||
-      card.querySelector('img')?.alt.toLowerCase().includes(term)
-    );
-
-    results.innerHTML = matches.length
-      ? matches.map(card => {
-          const link = card.getAttribute('href') || '#productos';
-          const name = card.querySelector('.card-body')?.innerText || card.innerText;
-          const img = card.querySelector('img')?.getAttribute('src') || '';
-          return `<a class="fenix-result" href="${link}">
-            <img src="${img}" alt="">
-            <span>${name}</span>
-          </a>`;
-        }).join('')
-      : '<p>No encontramos productos con esa búsqueda.</p>';
-  });
-});
-
 // FAVORITOS
 function saveFavorites() {
   localStorage.setItem('fenixFavorites', JSON.stringify(favorites));
@@ -481,12 +422,30 @@ fenixMenuBtn.addEventListener('click', () => {
 // ESTILOS DE LOS PANELES
 const fenixStyles = document.createElement('style');
 fenixStyles.textContent = `
-  #fenixPanel {
-    position:fixed; inset:0; z-index:9999;
-    background:rgba(0,0,0,.78);
-    display:flex; justify-content:center; align-items:center;
-    padding:20px;
-  }
+
+#fenixPanel {
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:rgba(0,0,0,.55);
+  display:flex;
+  justify-content:flex-end;
+  align-items:stretch;
+  padding:0;
+}
+
+#fenixPanel .fenix-panel-content {
+  position:relative;
+  width:min(420px, 92%);
+  height:100%;
+  max-height:100%;
+  overflow-y:auto;
+  background:#17110b;
+  color:#f8edda;
+  border-left:1px solid #c9a46b;
+  padding:65px 25px 30px;
+}
+
   .fenix-panel-content {
     position:relative; background:#17110b; color:#f8edda;
     border:1px solid #c9a46b; padding:35px;
