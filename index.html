@@ -507,7 +507,18 @@ background-repeat: no-repeat;
   <button type="button" id="favoritesBtn" aria-label="Mis favoritos">♡</button>
    <button type="button" id="fenixMenuBtn" aria-label="Más opciones">♧</button>
 <button type="button" id="cartBtn" aria-label="Carrito de compras">
-  🛍️ <span id="cartCount">0</span>
+  <svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 24 24"
+     width="23" height="23"
+     fill="none"
+     stroke="currentColor"
+     stroke-width="1.5"
+     stroke-linecap="round"
+     stroke-linejoin="round">
+  <path d="M5 8h14l-1 12H6L5 8Z"/>
+  <path d="M9 8V6a3 3 0 0 1 6 0v2"/>
+</svg>
+<span id="cartCount">0</span>
 </button>
 </div>
  <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
