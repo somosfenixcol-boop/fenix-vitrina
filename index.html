@@ -687,6 +687,9 @@ background-repeat: no-repeat;
 
 </div>
       </div>
+  <!-- CATÁLOGO INDIVIDUAL DE PRODUCTOS FÉNIX -->
+<div id="productosFenix" class="product-grid">
+</div>
 </section>
 <section class="about-section" id="nosotros"><img class="about-image" src="accesorios.jpg" alt="Accesorios elegantes que inspiran el estilo FÉNIX"><div class="about-copy"><p class="kicker">Más que una marca</p><h2>Renace a tu manera.</h2><p>FÉNIX nace de la idea de que cada historia puede abrir un nuevo comienzo. Reunimos joyería, accesorios, maquillaje y cuidado capilar para que cada persona explore su estilo, celebre su esencia y encuentre nuevas formas de expresarse.</p><p>Sin moldes. A tu manera. Una marca inclusiva donde cada detalle tiene intención.</p><a class="button button-primary" href="https://www.instagram.com/somosfenix.co/" target="_blank" rel="noopener">Conoce FÉNIX en Instagram&nbsp; →</a></div></section>
 <section class="contact-section" id="contacto"><div class="section-heading"><p class="kicker">Estamos aquí para ayudarte</p><h2>Encuentra tu próximo favorito</h2><p class="section-subtitle">¿Buscas un diseño especial o quieres conocer nuestros productos?<br>Escríbenos y te ayudaremos a encontrar una opción para ti.</p><div class="button-row"><a class="button button-primary" href="https://wa.me/message/FNSRH6O3RMZLD1" target="_blank" rel="noopener">◉&nbsp; Escribir por WhatsApp →</a><a class="button button-outline" href="https://www.instagram.com/somosfenix.co/" target="_blank" rel="noopener">◎&nbsp; Instagram FÉNIX</a></div></div></section>
@@ -750,6 +753,42 @@ function showPanel(title, content) {
     if (e.target === panel) panel.remove();
   };
 }
+  // CATÁLOGO DE PRODUCTOS FÉNIX
+
+const catalogoFenix = [];
+
+// Cada producto tendrá esta estructura:
+// {
+//   id: "MAN-001",
+//   nombre: "Nombre del producto",
+//   categoria: "manillas",
+//   descripcion: "Descripción del producto",
+//   precio: null,
+//   imagen: "",
+//   stock: 0
+// }  
+    // MOSTRAR PRODUCTOS DEL CATÁLOGO FÉNIX
+
+function mostrarProductosFenix() {
+  const contenedor = document.getElementById('productosFenix');
+
+  if (!contenedor) return;
+
+  if (catalogoFenix.length === 0) {
+    contenedor.innerHTML = `
+      <p class="catalogo-vacio">
+        Estamos preparando nuevos detalles para ti.
+        Muy pronto encontrarás aquí nuestros productos.
+      </p>
+    `;
+    return;
+  }
+}
+    }
+
+mostrarProductosFenix();
+
+// CARRITO DE COMPRAS FENIX
 // CARRITO DE COMPRAS FENIX
 const cartBtn = document.getElementById('cartBtn');
 
