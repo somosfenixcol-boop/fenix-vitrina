@@ -599,7 +599,7 @@ background-repeat: no-repeat;
 <section class="section dark-decor featured" id="productos"><div class="section-heading"><p class="kicker">Detalles con intención</p><h2>Productos destacados</h2><div class="flourish">♧</div><p class="section-subtitle">Una selección pensada para ti. Calidad, estilo y propósito en cada detalle.</p></div>
   <div class="product-grid">
 <div class="product-card"
-     data-category="capilar"
+     product-card="capilar"
      data-name="Accesorios capilares"
      data-price="">
 
@@ -615,7 +615,7 @@ background-repeat: no-repeat;
 
 </div>
 <div class="product-card"
-     data-category="maquillaje"
+     product-card="maquillaje"
      data-name="Maquillaje"
      data-price="">
 
@@ -631,7 +631,7 @@ background-repeat: no-repeat;
 
 </div>
 <div class="product-card"
-     data-category="accesorios"
+     product-card="accesorios"
      data-name="Accesorios"
      data-price="">
 
@@ -647,7 +647,7 @@ background-repeat: no-repeat;
 
 </div>
 <div class="product-card"
-     data-category="manillas"
+     product-card="manillas"
      data-name="Manillas"
      data-price="">
 
@@ -731,8 +731,84 @@ function showPanel(title, content) {
 }
   // CATÁLOGO DE PRODUCTOS FÉNIX
 
+// CATÁLOGO DE PRODUCTOS FÉNIX
 const catalogoFenix = [];
 
+// CONFIGURACIÓN DE LA TIENDA
+const configuracionFenix = {
+  moneda: "COP",
+  pais: "CO",
+  categorias: [
+    "manillas",
+    "accesorios",
+    "maquillaje",
+    "capilar"
+  ],
+  metodosPago: ["wompi"],
+  envioConfigurado: false
+};
+
+// AGREGAR PRODUCTOS AL CATÁLOGO
+function registrarProductoFenix(producto) {
+  const camposValidos =
+    producto.id &&
+    producto.nombre &&
+    configuracionFenix.categorias.includes(producto.categoria) &&
+    Number.isSafeInteger(producto.precio) &&
+    producto.precio > 0 &&
+    producto.imagen;
+
+  if (!camposValidos) {
+    throw new Error("Los datos del producto están incompletos.");
+  }
+
+  if (catalogoFenix.some(p => p.id === producto.id)) {
+    throw new Error("El producto ya existe.");
+  }
+
+  catalogoFenix.push({
+    id: producto.id,
+    nombre: producto.nombre,
+    categoria: producto.categoria,
+    descripcion: producto.descripcion || "",
+    precio: producto.precio,
+    imagen: producto.imagen,
+    stock: Math.max(0, Number(producto.stock) || 0)
+  });
+}
+    // CONSULTAR FICHA DE PRODUCTO FÉNIX
+function obtenerFichaProductoFenix(productoId) {
+  const producto = catalogoFenix.find(p => p.id === productoId);
+
+  if (!producto) return null;
+
+  return {
+    id: producto.id,
+    nombre: producto.nombre,
+    categoria: producto.categoria,
+    descripcion: producto.descripcion,
+    precio: producto.precio,
+    imagen: producto.imagen,
+    disponible: producto.stock > 0,
+    unidadesDisponibles: producto.stock
+  };
+}
+    // ACTUALIZAR EXISTENCIAS DE PRODUCTOS FÉNIX
+function actualizarStockFenix(productoId, cantidad) {
+  const producto = catalogoFenix.find(p => p.id === productoId);
+
+  if (!producto) {
+    throw new Error("Producto no encontrado.");
+  }
+
+  if (!Number.isInteger(cantidad) || cantidad < 0) {
+    throw new Error("Cantidad de inventario inválida.");
+  }
+
+  producto.stock = cantidad;
+
+  return producto.stock;
+}
 // Cada producto tendrá esta estructura:
 // {
 //   id: "MAN-001",
@@ -745,8 +821,57 @@ const catalogoFenix = [];
 // }  
     // MOSTRAR PRODUCTOS DEL CATÁLOGO FÉNIX
 
-function mostrarProductosFenix() {
+function mostrarProductosFenix(categoria = null) {
   const contenedor = document.getElementById('productosFenix');
+
+  if (!contenedor) return;
+
+  const productos = categoria
+    ? catalogoFenix.filter(p => p.categoria === categoria)
+    : catalogoFenix;
+
+  if (productos.length === 0) {
+    contenedor.innerHTML = `
+      <p class="catalogo-vacio">
+        Estamos preparando nuevos detalles para ti.
+        Muy pronto encontrarás aquí nuestros productos.
+      </p>
+    `;
+    return;
+  }
+
+  contenedor.innerHTML = productos.map(producto => `
+    <article class="fenix-product">
+      <img
+        src="${producto.imagen}"
+        alt="${producto.nombre}"
+        loading="lazy"
+      >
+
+      <div class="fenix-product-info">
+        <h3>${producto.nombre}</h3>
+        <p>${producto.descripcion}</p>
+        <p class="product-price">
+          ${producto.precio.toLocaleString("es-CO", {
+            style: "currency",
+            currency: "COP",
+            maximumFractionDigits: 0
+          })}
+        </p>
+
+        <button
+          type="button"
+          class="add-to-cart"
+          data-product-id="${producto.id}"
+          ${producto.stock <= 0 ? "disabled" : ""}
+        >
+          ${producto.stock <= 0 ? "Agotado" : "Agregar al carrito"}
+        </button>
+      </div>
+    </article>
+  `).join("");
+}
+    const contenedor = document.getElementById('productosFenix');
 
   if (!contenedor) return;
 
@@ -762,12 +887,70 @@ function mostrarProductosFenix() {
 }
 
 mostrarProductosFenix();
+    // ABRIR CATEGORÍAS DEL CATÁLOGO FÉNIX
+products.forEach(tarjeta => {
+  tarjeta.addEventListener("click", () => {
+    const categoria = tarjeta.dataset.category;
+
+    if (!configuracionFenix.categorias.includes(categoria)) {
+      return;
+    }
+
+    mostrarProductosFenix(categoria);
+
+    document.getElementById("productosFenix")
+      ?.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+  });
+});
 
 // CARRITO DE COMPRAS FENIX
 const cartBtn = document.getElementById('cartBtn');
 
 let cart = JSON.parse(localStorage.getItem('fenixCart') || '[]');
+// AGREGAR PRODUCTOS AL CARRITO FÉNIX
+function agregarAlCarrito(productoId) {
+  const producto = catalogoFenix.find(p => p.id === productoId);
 
+  if (!producto || producto.stock <= 0) {
+    alert("Este producto no está disponible.");
+    return;
+  }
+
+  const existente = cart.find(item => item.id === productoId);
+
+  if (existente) {
+    if (existente.quantity >= producto.stock) {
+      alert("No hay más unidades disponibles.");
+      return;
+    }
+
+    existente.quantity++;
+  } else {
+    cart.push({
+      id: producto.id,
+      name: producto.nombre,
+      price: producto.precio,
+      quantity: 1
+    });
+  }
+
+  localStorage.setItem("fenixCart", JSON.stringify(cart));
+  actualizarContadorCarrito();
+
+  alert("Producto agregado a tu carrito FÉNIX.");
+}
+
+// CONECTAR BOTONES DEL CATÁLOGO
+document.addEventListener("click", event => {
+  const boton = event.target.closest(".add-to-cart");
+
+  if (!boton) return;
+
+  agregarAlCarrito(boton.dataset.productId);
+});
 function actualizarContadorCarrito() {
   const contador = document.getElementById('cartCount');
   if (contador) {
@@ -776,23 +959,150 @@ function actualizarContadorCarrito() {
 }
 
 function abrirCarrito() {
-  let contenido = '';
-
   if (cart.length === 0) {
-    contenido = '<p>Tu carrito está vacío.</p>';
-  } else {
-    contenido = cart.map((item, index) => `
-      <div class="cart-item">
-        <p><strong>${item.name}</strong></p>
-        <p>Cantidad: ${item.quantity}</p>
-        <button onclick="eliminarDelCarrito(${index})">Eliminar</button>
-      </div>
-    `).join('');
+    showPanel("Mi carrito", `
+      <p>Tu carrito está vacío.</p>
+      <p>Descubre tus favoritos en FÉNIX.</p>
+    `);
+    return;
   }
 
-  showPanel('Mi carrito', contenido);
-}
+  let subtotal = 0;
 
+  const contenido = cart.map((item, index) => {
+    const producto = catalogoFenix.find(p => p.id === item.id);
+
+    if (!producto) return "";
+
+    const totalProducto = producto.precio * item.quantity;
+    subtotal += totalProducto;
+
+    return `
+      <div class="cart-item">
+        <h3>${producto.nombre}</h3>
+        <p>
+          ${producto.precio.toLocaleString("es-CO")} COP
+        </p>
+        <p>Cantidad: ${item.quantity}</p>
+        <p>
+          Total: ${totalProducto.toLocaleString("es-CO")} COP
+        </p>
+        <button
+          type="button"
+          onclick="eliminarDelCarrito(${index})"
+        >
+          Eliminar
+        </button>
+      </div>
+    `;
+  }).join("");
+
+  showPanel("Mi carrito", `
+    ${contenido}
+    <div class="cart-total">
+      <h3>Subtotal</h3>
+      <p>${subtotal.toLocaleString("es-CO")} COP</p>
+      <p>El envío se calculará antes del pago.</p>
+      <button type="button" id="fenixCheckout">
+        Continuar al pago
+      </button>
+    </div>
+  `);
+}
+// FORMULARIO DE DATOS DEL COMPRADOR FÉNIX
+    // GENERAR REFERENCIA ÚNICA DEL PEDIDO
+function generarReferenciaFenix() {
+  const fecha = Date.now().toString();
+  const aleatorio = Math.random().toString(36).substring(2, 8).toUpperCase();
+
+  return `FENIX-${fecha}-${aleatorio}`;
+}
+    // ENVIAR PEDIDO AL SERVIDOR FÉNIX
+async function enviarPedidoFenix(pedido) {
+  const respuesta = await fetch(
+    "https://fenix-wompi-api.somosfenix-col.workers.dev/crear-pedido",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(pedido)
+    }
+  );
+
+  if (!respuesta.ok) {
+    throw new Error("No fue posible registrar el pedido.");
+  }
+
+  return await respuesta.json();
+}
+function abrirFormularioCompra() {
+  if (!cart.length) {
+    alert("Tu carrito está vacío.");
+    return;
+  }
+  showPanel("Datos de entrega", `
+    <form id="fenixCheckoutForm">
+      <label>Nombre completo</label>
+      <input name="nombre" type="text" required>
+
+      <label>Correo electrónico</label>
+      <input name="correo" type="email" required>
+
+      <label>Celular</label>
+      <input name="celular" type="tel" required>
+
+      <label>Dirección de entrega</label>
+      <input name="direccion" type="text" required>
+
+      <label>Ciudad o municipio</label>
+      <input name="ciudad" type="text" required>
+
+      <button type="submit">
+        Continuar
+      </button>
+    </form>
+  `);
+
+  document.getElementById("fenixCheckoutForm")
+    ?.addEventListener("submit", event => {
+      event.preventDefault();
+
+      const datos = Object.fromEntries(
+        new FormData(event.target).entries()
+      );
+
+     const referencia = generarReferenciaFenix();
+
+const total = cart.reduce((suma, item) => {
+  const producto = catalogoFenix.find(p => p.id === item.id);
+  return suma + (producto ? producto.precio * item.quantity : 0);
+}, 0);
+
+const pedido = {
+  referencia,
+  comprador: datos,
+  productos: cart.map(item => ({ ...item })),
+  total,
+  moneda: "COP",
+  estado: "pendiente de pago",
+  fecha: new Date().toISOString()
+};
+
+sessionStorage.setItem(
+  "fenixPedidoPendiente",
+  JSON.stringify(pedido)
+);
+
+alert("Pedido " + referencia + " preparado correctamente.");
+    });
+}
+    // CONECTAR BOTÓN DE CONTINUAR AL PAGO
+document.addEventListener("click", event => {
+  if (event.target.id === "fenixCheckout") {
+    abrirFormularioCompra();
+  }
+});
 function eliminarDelCarrito(index) {
   cart.splice(index, 1);
   localStorage.setItem('fenixCart', JSON.stringify(cart));
