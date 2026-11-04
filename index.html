@@ -871,10 +871,6 @@ function mostrarProductosFenix(categoria = null) {
     </article>
   `).join("");
 }
-    const contenedor = document.getElementById('productosFenix');
-
-  if (!contenedor) return;
-
   if (catalogoFenix.length === 0) {
     contenedor.innerHTML = `
       <p class="catalogo-vacio">
