@@ -1036,11 +1036,13 @@ async function enviarPedidoFenix(pedido) {
 
   return await respuesta.json();
 }
+
 function abrirFormularioCompra() {
   if (!cart.length) {
     alert("Tu carrito está vacío.");
     return;
   }
+
   showPanel("Datos de entrega", `
     <form id="fenixCheckoutForm">
       <label>Nombre completo</label>
@@ -1058,45 +1060,107 @@ function abrirFormularioCompra() {
       <label>Ciudad o municipio</label>
       <input name="ciudad" type="text" required>
 
-      <button type="submit">
-        Continuar
-      </button>
+      <button type="submit">Pagar con Wompi</button>
     </form>
   `);
 
   document.getElementById("fenixCheckoutForm")
-    ?.addEventListener("submit", event => {
+    ?.addEventListener("submit", async event => {
       event.preventDefault();
 
-      const datos = Object.fromEntries(
-        new FormData(event.target).entries()
-      );
+      const formulario = event.currentTarget;
+      const boton = formulario.querySelector('button[type="submit"]');
+      boton.disabled = true;
+      boton.textContent = "Conectando con Wompi...";
 
-     const referencia = generarReferenciaFenix();
+      try {
+        const datos = Object.fromEntries(
+          new FormData(formulario).entries()
+        );
 
-const total = cart.reduce((suma, item) => {
-  const producto = catalogoFenix.find(p => p.id === item.id);
-  return suma + (producto ? producto.precio * item.quantity : 0);
-}, 0);
+        const referencia = generarReferenciaFenix();
 
-const pedido = {
-  referencia,
-  comprador: datos,
-  productos: cart.map(item => ({ ...item })),
-  total,
-  moneda: "COP",
-  estado: "pendiente de pago",
-  fecha: new Date().toISOString()
-};
+        const total = cart.reduce((suma, item) => {
+          const producto = catalogoFenix.find(p => p.id === item.id);
+          return suma + (producto ? producto.precio * item.quantity : 0);
+        }, 0);
 
-sessionStorage.setItem(
-  "fenixPedidoPendiente",
-  JSON.stringify(pedido)
-);
+        const amountInCents = Math.round(total * 100);
 
-alert("Pedido " + referencia + " preparado correctamente.");
+        if (!Number.isSafeInteger(amountInCents) || amountInCents <= 0) {
+          throw new Error("El pedido no tiene un valor válido.");
+        }
+
+        const pedido = {
+          referencia,
+          comprador: datos,
+          productos: cart.map(item => ({ ...item })),
+          total,
+          moneda: "COP",
+          estado: "pendiente de pago",
+          fecha: new Date().toISOString()
+        };
+
+        sessionStorage.setItem(
+          "fenixPedidoPendiente",
+          JSON.stringify(pedido)
+        );
+
+        const respuesta = await fetch(
+          "https://fenix-wompi-api.somosfenix-col.workers.dev/checkout-signature",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              reference: referencia,
+              amountInCents,
+              currency: "COP"
+            })
+          }
+        );
+
+        const resultado = await respuesta.json();
+
+        if (!respuesta.ok) {
+          throw new Error(
+            resultado.error || "No fue posible conectar con Wompi."
+          );
+        }
+
+        const checkout = document.createElement("form");
+        checkout.method = "GET";
+        checkout.action = "https://checkout.wompi.co/p/";
+
+        const campos = {
+          "public-key": resultado.publicKey,
+          "currency": resultado.currency,
+          "amount-in-cents": resultado.amountInCents,
+          "reference": resultado.reference,
+          "signature:integrity": resultado.signature,
+          "redirect-url": window.location.origin + "/"
+        };
+
+        Object.entries(campos).forEach(([nombre, valor]) => {
+          const input = document.createElement("input");
+          input.type = "hidden";
+          input.name = nombre;
+          input.value = String(valor);
+          checkout.appendChild(input);
+        });
+
+        document.body.appendChild(checkout);
+        checkout.submit();
+
+      } catch (error) {
+        alert(error.message);
+        boton.disabled = false;
+        boton.textContent = "Pagar con Wompi";
+      }
     });
 }
+
     // CONECTAR BOTÓN DE CONTINUAR AL PAGO
 document.addEventListener("click", event => {
   if (event.target.id === "fenixCheckout") {
