@@ -1091,7 +1091,8 @@ function abrirFormularioCompra() {
           "fenixPedidoPendiente",
           JSON.stringify(pedido)
         );
-
+await enviarPedidoFenix(pedido);
+        
         const respuesta = await fetch(
           "https://fenix-wompi-api.somosfenix-col.workers.dev/checkout-signature",
           {
