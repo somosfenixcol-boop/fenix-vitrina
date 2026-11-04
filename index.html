@@ -871,18 +871,8 @@ function mostrarProductosFenix(categoria = null) {
     </article>
   `).join("");
 }
-  if (catalogoFenix.length === 0) {
-    contenedor.innerHTML = `
-      <p class="catalogo-vacio">
-        Estamos preparando nuevos detalles para ti.
-        Muy pronto encontrarás aquí nuestros productos.
-      </p>
-    `;
-    return;
-  }
-}
-
 mostrarProductosFenix();
+    
     // ABRIR CATEGORÍAS DEL CATÁLOGO FÉNIX
 products.forEach(tarjeta => {
   tarjeta.addEventListener("click", () => {
