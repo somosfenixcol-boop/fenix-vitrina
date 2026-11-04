@@ -1449,8 +1449,8 @@ filterOptions.forEach(option => {
   option.addEventListener('change', applyCategoryFilters);
 });
 
-clearFiltersButton.addEventListener('click', () => {
-  filterOptions.forEach(option => {
+if (clearFiltersButton) clearFiltersButton.addEventListener('click', () => {
+    filterOptions.forEach(option => {
     option.checked = false;
   });
 
