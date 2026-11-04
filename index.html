@@ -1332,7 +1332,7 @@ products.forEach((card, index) => {
   card.appendChild(button);
 });
 
-favoritesBtn.addEventListener('click', () => {
+if (favoritesBtn) favoritesBtn.addEventListener('click', () => {
   const saved = favorites
     .map(index => products[index])
     .filter(Boolean);
@@ -1351,7 +1351,7 @@ favoritesBtn.addEventListener('click', () => {
 });
 
 // MENÚ FÉNIX
-fenixMenuBtn.addEventListener('click', () => {
+if (fenixMenuBtn) fenixMenuBtn.addEventListener('click', () => {  
   showPanel('Bienvenido a FÉNIX', `
     <nav class="fenix-links">
 <a href="nuestra-historia.html">Nuestra historia</a>
