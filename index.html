@@ -830,15 +830,10 @@ function mostrarProductosFenix(categoria = null) {
     ? catalogoFenix.filter(p => p.categoria === categoria)
     : catalogoFenix;
 
-  if (productos.length === 0) {
-    contenedor.innerHTML = `
-      <p class="catalogo-vacio">
-        Estamos preparando nuevos detalles para ti.
-        Muy pronto encontrarás aquí nuestros productos.
-      </p>
-    `;
-    return;
-  }
+ if (productos.length === 0) {
+  contenedor.innerHTML = "";
+  return;
+}
 
   contenedor.innerHTML = productos.map(producto => `
     <article class="fenix-product">
