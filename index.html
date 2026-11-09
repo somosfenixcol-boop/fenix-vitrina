@@ -145,6 +145,58 @@ background-repeat: no-repeat;
     bottom: 18px;
   }
 }
+  /* ===== NUESTRA ESENCIA FÉNIX ===== */
+
+.essence-section {
+  padding: 55px 5%;
+  background: linear-gradient(180deg, #100d0a, #17120e);
+  border-top: 1px solid var(--borde);
+  border-bottom: 1px solid var(--borde);
+}
+
+.essence-gallery {
+  max-width: 1150px;
+  margin: 30px auto 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+}
+
+.essence-item {
+  overflow: hidden;
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  background: #17120e;
+  box-shadow: 0 10px 30px rgba(0,0,0,.3);
+}
+
+.essence-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  cursor: zoom-in;
+}
+
+.essence-caption {
+  padding: 16px;
+  text-align: center;
+  color: var(--oro-claro);
+  font-family: 'Bodoni Moda', Georgia, serif;
+  font-size: 19px;
+}
+
+@media (min-width: 900px) {
+  .essence-gallery {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+@media (max-width: 600px) {
+  .essence-section {
+    padding: 35px 12px;
+  }
+}
   @media(min-width:1300px){.hero{min-height:340px}.hero-content{padding-left:7%}.section{padding-left:5%;padding-right:5%}.product-card img{height:200px}.featured .product-card img{height:190px}.about-image{height:190px}}
 @media(max-width:760px){
 .top-strip{font-size:6px;letter-spacing:.8px;padding:5px 10px}.top-strip span:last-child{display:inline}
@@ -564,8 +616,15 @@ background-repeat: no-repeat;
 
   <header class="site-header">
  <a class="logo" href="#inicio" aria-label="FÉNIX, inicio"><span class="logo-mark">♧</span><span><span class="logo-name">FÉNIX</span><span class="logo-tagline" style="display:block">RENACE A TU MANERA</span></span></a>
- <nav class="main-nav" id="mainNav" aria-label="Navegación principal"><a href="#inicio">Inicio</a><a href="#categorias">Categorías</a><a href="#productos">Productos</a><a href="#nosotros">Nosotros</a><a href="#contacto">Contacto</a></nav>
- <div class="header-actions">
+<nav class="main-nav" id="mainNav" aria-label="Navegación principal">
+  <a href="#inicio">Inicio</a>
+  <a href="#categorias">Categorías</a>
+  <a href="#productos">Productos</a>
+  <a href="#nosotros">Nosotros</a>
+  <a href="#esencia">Nuestra esencia</a>
+  <a href="#contacto">Contacto</a>
+</nav>
+    <div class="header-actions">
   <button type="button" id="searchBtn" aria-label="Buscar productos">⌕</button>
   <button type="button" id="favoritesBtn" aria-label="Mis favoritos">♡</button>
    <button type="button" id="fenixMenuBtn" aria-label="Más opciones">♧</button>
@@ -668,7 +727,48 @@ background-repeat: no-repeat;
 </div>
 </section>
 <section class="about-section" id="nosotros"><img class="about-image" src="accesorios.jpg" alt="Accesorios elegantes que inspiran el estilo FÉNIX"><div class="about-copy"><p class="kicker">Más que una marca</p><h2>Renace a tu manera.</h2><p>FÉNIX nace de la idea de que cada historia puede abrir un nuevo comienzo. Reunimos joyería, accesorios, maquillaje y cuidado capilar para que cada persona explore su estilo, celebre su esencia y encuentre nuevas formas de expresarse.</p><p>Sin moldes. A tu manera. Una marca inclusiva donde cada detalle tiene intención.</p><a class="button button-primary" href="https://www.instagram.com/somosfenix.co/" target="_blank" rel="noopener">Conoce FÉNIX en Instagram&nbsp; →</a></div></section>
-<section class="contact-section" id="contacto"><div class="section-heading"><p class="kicker">Estamos aquí para ayudarte</p><h2>Encuentra tu próximo favorito</h2><p class="section-subtitle">¿Buscas un diseño especial o quieres conocer nuestros productos?<br>Escríbenos y te ayudaremos a encontrar una opción para ti.</p><div class="button-row"><a class="button button-primary" href="https://wa.me/message/FNSRH6O3RMZLD1" target="_blank" rel="noopener">◉&nbsp; Escribir por WhatsApp →</a><a class="button button-outline" href="https://www.instagram.com/somosfenix.co/" target="_blank" rel="noopener">◎&nbsp; Instagram FÉNIX</a></div></div></section>
+<!-- NUESTRA ESENCIA FÉNIX -->
+<section class="essence-section" id="esencia">
+
+  <div class="section-heading">
+    <p class="kicker">Lo que nos representa</p>
+    <h2>Nuestra esencia</h2>
+    <div class="flourish">♧</div>
+    <p class="section-subtitle">
+      Conoce los principios, la personalidad y la esencia
+      que dan vida a FÉNIX.
+    </p>
+  </div>
+
+  <div class="essence-gallery">
+
+    <div class="essence-item">
+      <img
+        src="mision-vision-valores.png"
+        alt="Misión, visión y valores de FÉNIX"
+        loading="lazy"
+        onclick="window.open(this.src, '_blank')"
+      >
+      <div class="essence-caption">
+        Nuestra misión, visión y valores
+      </div>
+    </div>
+
+    <div class="essence-item">
+      <img
+        src="personalidad-tono-fenix.png"
+        alt="Personalidad y tono de comunicación de FÉNIX"
+        loading="lazy"
+        onclick="window.open(this.src, '_blank')"
+      >
+      <div class="essence-caption">
+        Nuestra personalidad y comunicación
+      </div>
+    </div>
+
+  </div>
+</section>
+  <section class="contact-section" id="contacto"><div class="section-heading"><p class="kicker">Estamos aquí para ayudarte</p><h2>Encuentra tu próximo favorito</h2><p class="section-subtitle">¿Buscas un diseño especial o quieres conocer nuestros productos?<br>Escríbenos y te ayudaremos a encontrar una opción para ti.</p><div class="button-row"><a class="button button-primary" href="https://wa.me/message/FNSRH6O3RMZLD1" target="_blank" rel="noopener">◉&nbsp; Escribir por WhatsApp →</a><a class="button button-outline" href="https://www.instagram.com/somosfenix.co/" target="_blank" rel="noopener">◎&nbsp; Instagram FÉNIX</a></div></div></section>
 </main>
 <footer class="site-footer"><a class="logo" href="#inicio"><span><span class="logo-name">FÉNIX</span></span></a><p class="footer-location">Renace a tu manera · Itagüí, Antioquia, Colombia</p><p class="copyright">© 2026 FÉNIX. Todos los derechos reservados.</p></footer>
 <a
