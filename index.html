@@ -1102,7 +1102,7 @@ function generarReferenciaFenix() {
     // ENVIAR PEDIDO AL SERVIDOR FÉNIX
 async function enviarPedidoFenix(pedido) {
   const respuesta = await fetch(
-    "https://fenix-wompi-api.somosfenix-col.workers.dev/crear-pedido",
+"https://fenix-wompi-api.somosfenix-col.workers.dev/crear-pedido-test",
     {
       method: "POST",
       headers: {
@@ -1190,7 +1190,7 @@ function abrirFormularioCompra() {
 await enviarPedidoFenix(pedido);
         
         const respuesta = await fetch(
-          "https://fenix-wompi-api.somosfenix-col.workers.dev/checkout-signature",
+"https://fenix-wompi-api.somosfenix-col.workers.dev/checkout-signature-test",
           {
             method: "POST",
             headers: {
