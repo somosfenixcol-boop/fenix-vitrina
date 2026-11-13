@@ -1097,7 +1097,7 @@ function generarReferenciaFenix() {
   const fecha = Date.now().toString();
   const aleatorio = Math.random().toString(36).substring(2, 8).toUpperCase();
 
-  return `FENIX-${fecha}-${aleatorio}`;
+return `FENIX-TEST-${fecha}-${aleatorio}`;
 }
     // ENVIAR PEDIDO AL SERVIDOR FÉNIX
 async function enviarPedidoFenix(pedido) {
