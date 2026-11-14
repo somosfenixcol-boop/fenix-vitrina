@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prueba de pago FÉNIX</title>
+</head>
+<body>
+  <h1>Prueba de pago FÉNIX</h1>
+  <p>Pedido de prueba por $10.000 COP.</p>
+
+  <button id="pagar">Continuar a Wompi Sandbox</button>
+  <p id="mensaje"></p>
+
+  <script>
+    const API = "https://fenix-wompi-api.somosfenix-col.workers.dev";
+    const REFERENCIA = "FENIX-TEST-20261113-002";
+    const TOTAL_EN_CENTAVOS = 1000000;
+
+    document.getElementById("pagar").addEventListener("click", async () => {
+      const boton = document.getElementById("pagar");
+      const mensaje = document.getElementById("mensaje");
+
+      boton.disabled = true;
+      mensaje.textContent = "Solicitando firma de pago...";
+
+      try {
+        const respuesta = await fetch(`${API}/checkout-signature-test`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            reference: REFERENCIA,
+            amountInCents: TOTAL_EN_CENTAVOS,
+            currency: "COP"
+          })
+        });
+
+        const resultado = await respuesta.json();
+
+        if (!respuesta.ok) {
+          throw new Error(resultado.error || "No fue posible generar la firma.");
+        }
+
+        if (resultado.environment !== "sandbox") {
+          throw new Error("El entorno no corresponde a pruebas.");
+        }
+
+        const formulario = document.createElement("form");
+        formulario.method = "GET";
+        formulario.action = "https://checkout.wompi.co/p/";
+
+        const campos = {
+          "public-key": resultado.publicKey,
+          currency: resultado.currency,
+          "amount-in-cents": resultado.amountInCents,
+          reference: resultado.reference,
+          "signature:integrity": resultado.signature,
+          "redirect-url": window.location.origin + "/fenix-vitrina/"
+        };
+
+        Object.entries(campos).forEach(([nombre, valor]) => {
+          const campo = document.createElement("input");
+          campo.type = "hidden";
+          campo.name = nombre;
+          campo.value = valor;
+          formulario.appendChild(campo);
+        });
+
+        document.body.appendChild(formulario);
+        formulario.submit();
+
+      } catch (error) {
+        mensaje.textContent = "Error: " + error.message;
+        boton.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
