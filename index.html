@@ -833,6 +833,21 @@ function showPanel(title, content) {
   // CATÁLOGO DE PRODUCTOS FÉNIX
 
 // CATÁLOGO DE PRODUCTOS FÉNIX
+    // CONFIGURACIÓN DEL AMBIENTE DE PAGOS FÉNIX
+const FENIX_PAYMENT_ENV = "sandbox";
+
+const FENIX_PAYMENT_ENDPOINTS = {
+  sandbox: {
+    crearPedido: "/crear-pedido-test",
+    generarFirma: "/checkout-signature-test",
+    prefijoReferencia: "FENIX-TEST-"
+  },
+  production: {
+    crearPedido: "/crear-pedido",
+    generarFirma: "/checkout-signature",
+    prefijoReferencia: "FENIX-"
+  }
+};
 const catalogoFenix = [];
 
 // CONFIGURACIÓN DE LA TIENDA
@@ -1093,16 +1108,35 @@ function abrirCarrito() {
 }
 // FORMULARIO DE DATOS DEL COMPRADOR FÉNIX
     // GENERAR REFERENCIA ÚNICA DEL PEDIDO
+// GENERAR REFERENCIA SEGÚN EL AMBIENTE
 function generarReferenciaFenix() {
-  const fecha = Date.now().toString();
-  const aleatorio = Math.random().toString(36).substring(2, 8).toUpperCase();
+  const entorno = FENIX_PAYMENT_ENDPOINTS[FENIX_PAYMENT_ENV];
 
-return `FENIX-TEST-${fecha}-${aleatorio}`;
+  if (!entorno) {
+    throw new Error("Ambiente de pago no válido.");
+  }
+
+  const fecha = Date.now().toString();
+  const aleatorio = crypto.randomUUID()
+    .replace(/-/g, "")
+    .substring(0, 12)
+    .toUpperCase();
+
+  return `${entorno.prefijoReferencia}${fecha}-${aleatorio}`;
 }
-    // ENVIAR PEDIDO AL SERVIDOR FÉNIX
+// ENVIAR PEDIDO AL SERVIDOR FÉNIX
 async function enviarPedidoFenix(pedido) {
+  const entorno = FENIX_PAYMENT_ENDPOINTS[FENIX_PAYMENT_ENV];
+
+  if (!entorno || FENIX_PAYMENT_ENV !== "sandbox") {
+    throw new Error(
+      "El ambiente de producción todavía no está habilitado."
+    );
+  }
+
   const respuesta = await fetch(
-"https://fenix-wompi-api.somosfenix-col.workers.dev/crear-pedido-test",
+    "https://fenix-wompi-api.somosfenix-col.workers.dev" +
+      entorno.crearPedido,
     {
       method: "POST",
       headers: {
@@ -1112,11 +1146,15 @@ async function enviarPedidoFenix(pedido) {
     }
   );
 
+  const resultado = await respuesta.json();
+
   if (!respuesta.ok) {
-    throw new Error("No fue posible registrar el pedido.");
+    throw new Error(
+      resultado.error || "No fue posible registrar el pedido."
+    );
   }
 
-  return await respuesta.json();
+  return resultado;
 }
 
 function abrirFormularioCompra() {
@@ -1190,7 +1228,8 @@ function abrirFormularioCompra() {
 await enviarPedidoFenix(pedido);
         
         const respuesta = await fetch(
-"https://fenix-wompi-api.somosfenix-col.workers.dev/checkout-signature-test",
+"https://fenix-wompi-api.somosfenix-col.workers.dev" +
+  FENIX_PAYMENT_ENDPOINTS[FENIX_PAYMENT_ENV].generarFirma,
           {
             method: "POST",
             headers: {
@@ -1211,7 +1250,9 @@ await enviarPedidoFenix(pedido);
             resultado.error || "No fue posible conectar con Wompi."
           );
         }
-
+if (resultado.entorno !== FENIX_PAYMENT_ENV) {
+  throw new Error("El ambiente de pago no coincide con la configuración.");
+}
         const checkout = document.createElement("form");
         checkout.method = "GET";
         checkout.action = "https://checkout.wompi.co/p/";
