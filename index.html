@@ -1126,6 +1126,7 @@ function generarReferenciaFenix() {
   return `${entorno.prefijoReferencia}${fecha}-${aleatorio}`;
 }
 // ENVIAR PEDIDO AL SERVIDOR FÉNIX
+
 async function enviarPedidoFenix(pedido) {
   const entorno = FENIX_PAYMENT_ENDPOINTS[FENIX_PAYMENT_ENV];
 
@@ -1135,19 +1136,36 @@ async function enviarPedidoFenix(pedido) {
     );
   }
 
+  const turnstileToken = window.fenixTurnstileToken;
+
+  if (!turnstileToken) {
+    throw new Error(
+      "Completa la verificación de seguridad antes de pagar."
+    );
+  }
+
   const respuesta = await fetch(
-    "https://fenix-wompi-api.somosfenix-col.workers.dev" +
+    "https://fenix-wompi-pruebas.somosfenix-col.workers.dev" +
       entorno.crearPedido,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(pedido)
+      body: JSON.stringify({
+        ...pedido,
+        turnstileToken
+      })
     }
   );
 
   const resultado = await respuesta.json();
+
+  window.fenixTurnstileToken = "";
+
+  if (window.turnstile && window.fenixTurnstileWidgetId !== null) {
+    window.turnstile.reset(window.fenixTurnstileWidgetId);
+  }
 
   if (!respuesta.ok) {
     throw new Error(
@@ -1181,10 +1199,14 @@ function abrirFormularioCompra() {
       <label>Ciudad o municipio</label>
       <input name="ciudad" type="text" required>
 
+<div id="fenixTurnstile"></div>
+
       <button type="submit">Pagar con Wompi</button>
     </form>
   `);
 
+   window.renderFenixTurnstile?.();
+  
   document.getElementById("fenixCheckoutForm")
     ?.addEventListener("submit", async event => {
       event.preventDefault();
@@ -1851,5 +1873,51 @@ if (clearFiltersButton) clearFiltersButton.addEventListener('click', () => {
       fill="currentColor"/>
   </svg>
 </a>
+  
+<script>
+  window.fenixTurnstileReady = false;
+  window.fenixTurnstileWidgetId = null;
+  window.fenixTurnstileToken = "";
+
+  window.renderFenixTurnstile = function () {
+    const container = document.getElementById("fenixTurnstile");
+
+    if (
+      !container ||
+      !window.fenixTurnstileReady ||
+      window.fenixTurnstileWidgetId !== null
+    ) {
+      return;
+    }
+
+    window.fenixTurnstileWidgetId = turnstile.render(
+      container,
+      {
+        sitekey: FENIX_TURNSTILE_SITE_KEY,
+        callback: function (token) {
+          window.fenixTurnstileToken = token;
+        },
+        "expired-callback": function () {
+          window.fenixTurnstileToken = "";
+        },
+        "error-callback": function () {
+          window.fenixTurnstileToken = "";
+        }
+      }
+    );
+  };
+
+  window.onloadTurnstileCallback = function () {
+    window.fenixTurnstileReady = true;
+    window.renderFenixTurnstile();
+  };
+</script>
+
+<script
+  src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback&render=explicit"
+  async
+  defer
+></script>
+
 </body>
 </html>
