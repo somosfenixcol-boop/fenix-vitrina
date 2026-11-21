@@ -1248,10 +1248,13 @@ function abrirFormularioCompra() {
           "fenixPedidoPendiente",
           JSON.stringify(pedido)
         );
-await enviarPedidoFenix(pedido);
-        
+const registro = await enviarPedidoFenix(pedido);
+
+if (!registro.checkoutToken) {
+  throw new Error("No se recibió la autorización del checkout.");
+}        
         const respuesta = await fetch(
-"https://fenix-wompi-api.somosfenix-col.workers.dev" +
+"https://fenix-wompi-pruebas.somosfenix-col.workers.dev" +
   FENIX_PAYMENT_ENDPOINTS[FENIX_PAYMENT_ENV].generarFirma,
           {
             method: "POST",
