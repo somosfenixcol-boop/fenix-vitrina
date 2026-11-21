@@ -1262,10 +1262,11 @@ if (!registro.checkoutToken) {
               "Content-Type": "application/json"
             },
             body: JSON.stringify({
-              reference: referencia,
-              amountInCents,
-              currency: "COP"
-            })
+  reference: referencia,
+  amountInCents,
+  currency: "COP",
+  checkoutToken: registro.checkoutToken
+})
           }
         );
 
