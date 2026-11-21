@@ -812,6 +812,16 @@ const products = [...document.querySelectorAll('.product-card')];
 let favorites = JSON.parse(localStorage.getItem('fenixFavorites') || '[]');
 
 function showPanel(title, content) {
+  if (
+    window.turnstile &&
+    window.fenixTurnstileWidgetId !== null &&
+    window.fenixTurnstileWidgetId !== undefined
+  ) {
+    window.turnstile.remove(window.fenixTurnstileWidgetId);
+    window.fenixTurnstileWidgetId = null;
+    window.fenixTurnstileToken = "";
+  }
+
   document.getElementById('fenixPanel')?.remove();
 
   const panel = document.createElement('div');
